@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How does the forward current density of a Si p-n junction at 0.6 V change with temperature?</title>
+<style>
+:root { color-scheme: light; }
+html { background: #fff; }
+body { margin: 0 auto; max-width: 760px; padding: 48px 24px 72px; color: #111; background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px; line-height: 1.55; }
+h1 { font-size: 26px; line-height: 1.25; margin: 0 0 20px; font-weight: 650; letter-spacing: -0.01em; }
+h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; color: #555; margin: 44px 0 12px; font-weight: 600; }
+p { margin: 0 0 14px; }
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86em; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0 16px; font-size: 14px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #e3e3e3; vertical-align: top; }
+td .mono, td.mono { word-break: break-all; }
+table { table-layout: auto; }
+th { font-weight: 600; color: #333; border-bottom: 1.5px solid #bbb; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+th.num { text-align: right; }
+a { color: #0b4f9c; text-decoration: none; }
+a:hover { text-decoration: underline; }
+figure { margin: 8px 0 16px; }
+figure svg { max-width: 100%; height: auto; display: block; }
+figcaption { font-size: 13px; color: #555; margin-top: 6px; }
+pre { background: #f6f6f6; padding: 12px 14px; overflow-x: auto; border-radius: 4px; }
+ul { padding-left: 22px; } li { margin: 4px 0; }
+.meta { color: #555; font-size: 14px; }
+footer { margin-top: 56px; color: #777; font-size: 13px; border-top: 1px solid #e3e3e3; padding-top: 14px; }
+@media print { body { padding: 0; max-width: none; } a { color: #111; } h2 { page-break-after: avoid; }
+  table, figure { page-break-inside: avoid; } }
+</style></head><body>
+<main>
+<h1>How does the forward current density of a Si p-n junction at 0.6 V change with temperature?</h1>
+<p class="meta">Study <span class="mono">si-pn-diode-vs-temperature</span>, created 2026-10-21T17:00:44Z. 5 runs, 10 ResultsDB queries.</p>
+<p>Across 5 runs, current density at max bias goes from 1.75 A/cm^2 at temperature=250 K to 35.52 A/cm^2 at temperature=450 K. That is a factor of 20.3 over the range. 1 result came from nanoHUB&#x27;s cache and 4 were computed in this session.</p>
+<h2>Tools</h2>
+<table><thead><tr><th>name</th><th>revision</th><th>URL</th><th>DOI</th></tr></thead><tbody>
+<tr><td class="mono">st4pnjunction</td><td class="mono">r15</td><td><a href="https://nanohub.org/tools/st4pnjunction">https://nanohub.org/tools/st4pnjunction</a></td><td><a href="https://doi.org/10.21981/JMXM-4E74">10.21981/JMXM-4E74</a></td></tr>
+</tbody></table>
+<h2>Runs</h2>
+<p>Metric: current density at max bias (A/cm^2), the last value of the &#x27;function&#x27; array of <code>IV Characteristic</code>.</p>
+<table><thead><tr><th>idx</th><th>squid</th><th>varied inputs</th><th class="num">metric (A/cm^2)</th><th>served from cache</th><th>original date</th><th class="num">wall s</th></tr></thead><tbody>
+<tr><td>0</td><td><span class="mono">st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951</span></td><td>temperature=300 (default)</td><td class="num">14.21</td><td>yes</td><td class="mono">2023-10-27T16:21:53Z</td><td class="num">4</td></tr>
+<tr><td>1</td><td><span class="mono">st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb</span></td><td>temperature=250<br><span class="meta">(server reported temperature=300)</span></td><td class="num">1.75</td><td>no</td><td class="mono">2026-10-21T17:02:33Z</td><td class="num">14</td></tr>
+<tr><td>2</td><td><span class="mono">st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561</span></td><td>temperature=350<br><span class="meta">(server reported temperature=300)</span></td><td class="num">25.84</td><td>no</td><td class="mono">2026-10-21T17:02:38Z</td><td class="num">13</td></tr>
+<tr><td>3</td><td><span class="mono">st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee</span></td><td>temperature=400<br><span class="meta">(server reported temperature=300)</span></td><td class="num">32.36</td><td>no</td><td class="mono">2026-10-21T17:02:40Z</td><td class="num">13</td></tr>
+<tr><td>4</td><td><span class="mono">st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c</span></td><td>temperature=450<br><span class="meta">(server reported temperature=300)</span></td><td class="num">35.52</td><td>no</td><td class="mono">2026-10-21T17:11:36Z</td><td class="num">38</td></tr>
+</tbody></table>
+<h2>Chart</h2>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="How does the forward current density of a Si p-n junction at 0.6 V change with temperature?" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="12">
+<rect x="0" y="0" width="640" height="400" fill="#ffffff"/>
+<text x="348.0" y="16" text-anchor="middle" font-size="13" fill="#111">How does the forward current density of a Si p-n junction at 0.6 V change with temperature?</text>
+<line x1="80.0" y1="24" x2="80.0" y2="336" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="80.0" y1="336" x2="80.0" y2="341" stroke="#111"/>
+<text x="80.0" y="354" text-anchor="middle" fill="#111">250</text>
+<line x1="214.0" y1="24" x2="214.0" y2="336" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="214.0" y1="336" x2="214.0" y2="341" stroke="#111"/>
+<text x="214.0" y="354" text-anchor="middle" fill="#111">300</text>
+<line x1="348.0" y1="24" x2="348.0" y2="336" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="348.0" y1="336" x2="348.0" y2="341" stroke="#111"/>
+<text x="348.0" y="354" text-anchor="middle" fill="#111">350</text>
+<line x1="482.0" y1="24" x2="482.0" y2="336" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="482.0" y1="336" x2="482.0" y2="341" stroke="#111"/>
+<text x="482.0" y="354" text-anchor="middle" fill="#111">400</text>
+<line x1="616.0" y1="24" x2="616.0" y2="336" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="616.0" y1="336" x2="616.0" y2="341" stroke="#111"/>
+<text x="616.0" y="354" text-anchor="middle" fill="#111">450</text>
+<line x1="80" y1="259.8" x2="616" y2="259.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="75" y1="259.8" x2="80" y2="259.8" stroke="#111"/>
+<text x="72" y="263.8" text-anchor="end" fill="#111">10</text>
+<line x1="80" y1="167.4" x2="616" y2="167.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="75" y1="167.4" x2="80" y2="167.4" stroke="#111"/>
+<text x="72" y="171.4" text-anchor="end" fill="#111">20</text>
+<line x1="80" y1="75.0" x2="616" y2="75.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="75" y1="75.0" x2="80" y2="75.0" stroke="#111"/>
+<text x="72" y="79.0" text-anchor="end" fill="#111">30</text>
+<line x1="80" y1="24" x2="80" y2="336" stroke="#111" stroke-width="1.2"/>
+<line x1="80" y1="336" x2="616" y2="336" stroke="#111" stroke-width="1.2"/>
+<text class="axis-label" x="348.0" y="376" text-anchor="middle" fill="#111">temperature (K)</text>
+<text class="axis-label" x="16" y="180.0" text-anchor="middle" fill="#111" transform="rotate(-90 16 180.0)">current density at max bias (A/cm^2)</text>
+<polyline points="80.0,336.0 214.0,220.9 348.0,113.4 482.0,53.2 616.0,24.0" fill="none" stroke="#1a1a1a" stroke-width="1.6"/>
+<circle cx="80.0" cy="336.0" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"><title>temperature (K) = 250; current density at max bias (A/cm^2) = 1.75</title></circle>
+<circle cx="214.0" cy="220.9" r="4" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="1.4"><title>temperature (K) = 300; current density at max bias (A/cm^2) = 14.21</title></circle>
+<circle cx="348.0" cy="113.4" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"><title>temperature (K) = 350; current density at max bias (A/cm^2) = 25.84</title></circle>
+<circle cx="482.0" cy="53.2" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"><title>temperature (K) = 400; current density at max bias (A/cm^2) = 32.36</title></circle>
+<circle cx="616.0" cy="24.0" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.4"><title>temperature (K) = 450; current density at max bias (A/cm^2) = 35.52</title></circle>
+<circle cx="386" cy="324" r="4" fill="#1a1a1a" stroke="#1a1a1a"/>
+<text x="396" y="328" fill="#111">served from cache</text>
+<circle cx="511" cy="324" r="4" fill="#fff" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="521" y="328" fill="#111">computed now</text>
+</svg><figcaption>current density at max bias versus temperature (K). Filled markers were served from nanoHUB's ResultsDB cache; hollow markers were computed in this session.</figcaption></figure>
+<h2>Methods</h2>
+<p>We asked: How does the forward current density of a Si p-n junction at 0.6 V change with temperature?</p>
+<p>Using the nanoHUB tool st4pnjunction (revision r15, https://nanohub.org/tools/st4pnjunction, DOI 10.21981/JMXM-4E74) through the AURA MCP server, we submitted 5 simulation requests varying temperature over {300, 250, 350, 400, 450} K, with all other inputs at their tool defaults. For each run we requested the outputs &#x27;IV Characteristic&#x27;, &#x27;Parameters&#x27;. The reported metric is current density at max bias (A/cm^2), computed as the last value of the &#x27;function&#x27; array of the &#x27;IV Characteristic&#x27; output.</p>
+<p>Of the 5 successful runs, 1 was served from nanoHUB&#x27;s ResultsDB cache (originally computed on 2023-10-27), 4 were computed during this session.</p>
+<p>Requests were submitted between 2026-10-21T17:02:15Z and 2026-10-21T17:11:10Z by Claude Code (claude-fable-5-1) on behalf of Antonio Leitao. Each run is identified by its ResultsDB squid; the ordered re-execution plan is in rerun.json (runcard 0.1.0).</p>
+<h2>Provenance</h2><ul>
+<li>AURA trace id: <span class="mono">b7298f71-7271-4977-b0c4-e1cd4504260b</span></li>
+<li>Study created: 2026-10-21T17:00:44Z</li>
+<li>Runs requested: 2026-10-21T17:02:15Z to 2026-10-21T17:11:10Z</li>
+<li>Agent: Claude Code (<span class="mono">claude-fable-5-1</span>)</li>
+<li>Author: Antonio Leitao</li>
+<li>Provenance computed: 2026-10-21T17:16:23Z; cached 1, fresh 4, unverified 0</li>
+<li>ResultsDB date offset applied: -7 h (calibrated against simulator log stamps)</li>
+<li>Simulator log stamps (from returned files): run 0: <span class="mono">2023-10-27T16:21:35Z</span>, run 1: <span class="mono">2026-10-21T17:02:19Z</span>, run 2: <span class="mono">2026-10-21T17:02:21Z</span>, run 3: <span class="mono">2026-10-21T17:02:22Z</span>, run 4: <span class="mono">2026-10-21T17:11:23Z</span></li>
+<li>Raw payloads (inline files stripped) under <span class="mono">raw/</span>; machine-readable record in <span class="mono">ro-crate-metadata.json</span></li>
+</ul>
+<h2>How to re-run</h2>
+<pre><code>python -m runcard rerun-plan --dir studies/si-pn-diode-vs-temperature</code></pre>
+<p>Execute each step through the AURA MCP server in order, log the results into a new study directory, then compare the two directories with <code>python -m runcard compare</code>.</p>
+</main>
+<footer>Generated by runcard 0.1.0. Self-contained file, no external assets.</footer>
+</body></html>

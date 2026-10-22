@@ -1,0 +1,3502 @@
+{
+  "schema_version": "1.0",
+  "question": "How does the forward current density of a Si p-n junction at 0.6 V change with temperature?",
+  "slug": "si-pn-diode-vs-temperature-rerun",
+  "created_at": "2026-10-21T17:11:43Z",
+  "agent": {
+    "client": "Claude Code",
+    "model": "claude-fable-5-1"
+  },
+  "author": "Antonio Leitao",
+  "aura_trace_id": "b7298f71-7271-4977-b0c4-e1cd4504260b",
+  "metric": {
+    "output": "IV Characteristic",
+    "reduce": "last_of_function",
+    "unit": "A/cm^2",
+    "label": "current density at max bias"
+  },
+  "tools": {
+    "st4pnjunction": {
+      "name": "st4pnjunction",
+      "url": "https://nanohub.org/tools/st4pnjunction",
+      "doi": "10.21981/JMXM-4E74",
+      "tool_kind": "sim2l",
+      "execution_tool": "run_sim2l",
+      "inputs": {
+        "Na": {
+          "max": 2e+22,
+          "min": 1,
+          "type": "number",
+          "label": "Na",
+          "units": "1 / centimeter ** 3",
+          "default": 2000000000000000,
+          "description": "Acceptor concentration (Na-)"
+        },
+        "Nd": {
+          "max": 2e+22,
+          "min": 1,
+          "type": "number",
+          "label": "Nd",
+          "units": "1 / centimeter ** 3",
+          "default": 1000000000000000,
+          "description": "Donor concentration (Nd+)"
+        },
+        "taun": {
+          "min": 0,
+          "type": "number",
+          "label": "taun",
+          "units": "second",
+          "default": 1e-10,
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole."
+        },
+        "taup": {
+          "min": 0,
+          "type": "number",
+          "label": "taup",
+          "units": "second",
+          "default": 1e-10,
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron."
+        },
+        "i_len": {
+          "max": 100,
+          "min": 0,
+          "type": "number",
+          "label": "i_len",
+          "units": "micrometer",
+          "default": 0,
+          "description": "Physical length of the intrinsic region (zero doping)."
+        },
+        "n_len": {
+          "max": 100,
+          "min": 0,
+          "type": "number",
+          "label": "n_len",
+          "units": "micrometer",
+          "default": 6,
+          "description": "Physical length of N-type material."
+        },
+        "p_len": {
+          "max": 100,
+          "min": 0,
+          "type": "number",
+          "label": "p_len",
+          "units": "micrometer",
+          "default": 3,
+          "description": "Physical length of P-type material."
+        },
+        "i_node": {
+          "max": 1000,
+          "min": 0,
+          "type": "integer",
+          "label": "i_node",
+          "default": 0,
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero."
+        },
+        "n_node": {
+          "max": 1000,
+          "min": 0,
+          "type": "integer",
+          "label": "n_node",
+          "default": 120,
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy."
+        },
+        "p_node": {
+          "max": 1000,
+          "min": 0,
+          "type": "integer",
+          "label": "p_node",
+          "default": 60,
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy"
+        },
+        "vn_step": {
+          "min": 2,
+          "type": "integer",
+          "label": "vn_step",
+          "default": 20,
+          "description": "Set the number data points sampled in the voltage sweep."
+        },
+        "impurity": {
+          "type": "boolean",
+          "label": "impurity",
+          "default": false,
+          "description": "Here you define if any impurity doping level exists in the intrinsic region."
+        },
+        "materialp": {
+          "type": "string",
+          "label": "materialp",
+          "default": "Si",
+          "description": "Set the type of material used for the entire region."
+        },
+        "temperature": {
+          "max": 500,
+          "min": 77,
+          "type": "number",
+          "label": "temperature",
+          "units": "kelvin",
+          "default": 300,
+          "description": "This is the temperature in the environment around the device."
+        },
+        "vsweep_high": {
+          "max": 5,
+          "min": -5,
+          "type": "number",
+          "label": "vsweep_high",
+          "units": "volt",
+          "default": 0.6,
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage."
+        },
+        "impuritylevel": {
+          "max": 1e+26,
+          "min": 0,
+          "type": "number",
+          "label": "impuritylevel",
+          "units": "1 / centimeter ** 3",
+          "default": 10000000000000,
+          "description": "Unintentional doping in the intrinsic region."
+        },
+        "impuritydoping": {
+          "type": "string",
+          "label": "impuritydoping",
+          "default": "Ptype",
+          "description": "Here you define type of doping for in the intrinsic region"
+        }
+      },
+      "outputs": {
+        "Ec": {
+          "type": "dict",
+          "label": "Ec",
+          "description": "Ec"
+        },
+        "Ei": {
+          "type": "dict",
+          "label": "Ei",
+          "description": "Energy Band Diagram"
+        },
+        "Ev": {
+          "type": "dict",
+          "label": "Ev",
+          "description": "Ev"
+        },
+        "Efn": {
+          "type": "dict",
+          "label": "Efn",
+          "description": "quasi Fermi level for electrons at equilibrium"
+        },
+        "Efp": {
+          "type": "dict",
+          "label": "Efp",
+          "description": "quasi Fermi level for holes at equilibrium"
+        },
+        "Parameters": {
+          "type": "string",
+          "label": "Parameters",
+          "description": "Parameters"
+        },
+        "Hole Density": {
+          "type": "dict",
+          "label": "Hole Density",
+          "description": "Hole Density at equilibrium"
+        },
+        "Total Current": {
+          "type": "dict",
+          "label": "Total Current",
+          "description": "Total current"
+        },
+        "Charge Density": {
+          "type": "dict",
+          "label": "Charge Density",
+          "description": "Charge Density (at equilibrium)"
+        },
+        "Electric Field": {
+          "type": "dict",
+          "label": "Electric Field",
+          "description": "Electric Field"
+        },
+        "Equilibrium Ec": {
+          "type": "dict",
+          "label": "Equilibrium Ec",
+          "description": "Ec (at equilibrium)"
+        },
+        "Equilibrium Ei": {
+          "type": "dict",
+          "label": "Equilibrium Ei",
+          "description": "Ei"
+        },
+        "Equilibrium Ev": {
+          "type": "dict",
+          "label": "Equilibrium Ev",
+          "description": "Ev (at equilibrium)"
+        },
+        "Electron Density": {
+          "type": "dict",
+          "label": "Electron Density",
+          "description": "Electron Density at equilibrium"
+        },
+        "QuasiFermi Holes": {
+          "type": "dict",
+          "label": "QuasiFermi Holes",
+          "description": "Quasi Fermi level for holes"
+        },
+        "CV Characteristic": {
+          "type": "dict",
+          "label": "CV Characteristic",
+          "description": "voltage -> Gate voltage (V), function -> Capacitance (F/cm2)"
+        },
+        "IV Characteristic": {
+          "type": "dict",
+          "label": "IV Characteristic",
+          "description": "voltage -> Gate voltage (V), function -> Current (A/cm2)"
+        },
+        "Net Charge Density": {
+          "type": "dict",
+          "label": "Net Charge Density",
+          "description": "Net Charge Density"
+        },
+        "Recombination Rate": {
+          "type": "dict",
+          "label": "Recombination Rate",
+          "description": "Recombination Rate"
+        },
+        "Excess Hole Density": {
+          "type": "dict",
+          "label": "Excess Hole Density",
+          "description": "Excess Hole Density"
+        },
+        "Total Current Holes": {
+          "type": "dict",
+          "label": "Total Current Holes",
+          "description": "Total current holes"
+        },
+        "QuasiFermi Electrons": {
+          "type": "dict",
+          "label": "QuasiFermi Electrons",
+          "description": "Quasi Fermi level for electrons"
+        },
+        "Equilibrium Potential": {
+          "type": "dict",
+          "label": "Equilibrium Potential",
+          "description": "Electrostatic Potential (at equilibrium)"
+        },
+        "Electrostatic Potential": {
+          "type": "dict",
+          "label": "Electrostatic Potential",
+          "description": "Electrostatic Potential"
+        },
+        "Excess Electron Density": {
+          "type": "dict",
+          "label": "Excess Electron Density",
+          "description": "Excess Electron Density"
+        },
+        "Total Current Electrons": {
+          "type": "dict",
+          "label": "Total Current Electrons",
+          "description": "Total current electrons"
+        },
+        "Equilibrium Hole Density": {
+          "type": "dict",
+          "label": "Equilibrium Hole Density",
+          "description": "Hole Density"
+        },
+        "Equilibrium Electric Field": {
+          "type": "dict",
+          "label": "Equilibrium Electric Field",
+          "description": "Electric Field (at equilibrium)"
+        },
+        "Equilibrium Electron Density": {
+          "type": "dict",
+          "label": "Equilibrium Electron Density",
+          "description": "Electron Density"
+        },
+        "Equilibrium Net Charge Density": {
+          "type": "dict",
+          "label": "Equilibrium Net Charge Density",
+          "description": "Net Charge Density (at equilibrium)"
+        },
+        "Equilibrium Recombination Rate": {
+          "type": "dict",
+          "label": "Equilibrium Recombination Rate",
+          "description": "Recombination Rate (at equilibrium)"
+        },
+        "Output Log": {
+          "type": "file",
+          "label": "Output Log",
+          "description": "Output Log"
+        },
+        "Padre Input Deck": {
+          "type": "file",
+          "label": "Padre Input Deck",
+          "description": "Padre Input Deck"
+        }
+      },
+      "snapshot_at": "2026-10-21T17:11:43Z"
+    }
+  },
+  "runs": [
+    {
+      "index": 0,
+      "tool": "st4pnjunction",
+      "chosen_inputs": {
+        "temperature": 250
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "requested_at": "2026-10-21T17:12:32Z",
+      "completed_at": "2026-10-21T17:12:59Z",
+      "wall_seconds": 27.0,
+      "status": "done",
+      "error": null,
+      "squid": "st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb",
+      "revision": 15,
+      "resolved_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "effective_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 250,
+          "reported": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "simulator_log_date": "2026-10-21T17:02:19Z",
+      "outputs": {
+        "IV Characteristic": {
+          "voltage": [
+            0,
+            0,
+            0.0315789474,
+            0.0631578947,
+            0.0947368421,
+            0.126315789,
+            0.157894737,
+            0.189473684,
+            0.221052632,
+            0.252631579,
+            0.284210526,
+            0.315789474,
+            0.347368421,
+            0.378947368,
+            0.410526316,
+            0.442105263,
+            0.473684211,
+            0.505263158,
+            0.536842105,
+            0.568421053,
+            0.6
+          ],
+          "function": [
+            -5.2622601800000006e-14,
+            -5.2622601800000006e-14,
+            5.15180444e-07,
+            1.5263236500000001e-06,
+            3.63748905e-06,
+            8.13992446e-06,
+            1.78106314e-05,
+            3.8654734e-05,
+            8.3717306e-05,
+            0.00018147173,
+            0.00039442437000000003,
+            0.0008608049070000001,
+            0.0018892891200000001,
+            0.00417830251,
+            0.00933683187,
+            0.0211629366,
+            0.048908945499999995,
+            0.115946703,
+            0.283107662,
+            0.7074642,
+            1.74986196
+          ]
+        },
+        "Parameters": "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 250K\n  V bias: 0.6 V (20 points)\n"
+      },
+      "metric_value": 1.74986196,
+      "input_mismatches": [
+        {
+          "name": "temperature",
+          "chosen": 250,
+          "resolved": 300
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Output Log",
+          "kind": "file",
+          "bytes": 214650,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Output Log",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Output Log"
+        },
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Padre Input Deck",
+          "kind": "file",
+          "bytes": 30040,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Padre Input Deck",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb/Padre Input Deck"
+        }
+      ],
+      "raw_path": "raw/run-00-st4pnjunction.json",
+      "inline_attachments_stripped": true,
+      "served_from_cache": true,
+      "original_date": "2026-10-21T17:02:33Z",
+      "provenance_evidence": {
+        "source": "squid present in original study",
+        "original_run_index": 1,
+        "original_study": "si-pn-diode-vs-temperature"
+      }
+    },
+    {
+      "index": 1,
+      "tool": "st4pnjunction",
+      "chosen_inputs": {},
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "requested_at": "2026-10-21T17:13:14Z",
+      "completed_at": "2026-10-21T17:13:22Z",
+      "wall_seconds": 8.0,
+      "status": "done",
+      "error": null,
+      "squid": "st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951",
+      "revision": 15,
+      "resolved_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "effective_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "simulator_log_date": "2023-10-27T16:21:35Z",
+      "outputs": {
+        "IV Characteristic": {
+          "voltage": [
+            0,
+            0,
+            0.0315789474,
+            0.0631578947,
+            0.0947368421,
+            0.126315789,
+            0.157894737,
+            0.189473684,
+            0.221052632,
+            0.252631579,
+            0.284210526,
+            0.315789474,
+            0.347368421,
+            0.378947368,
+            0.410526316,
+            0.442105263,
+            0.473684211,
+            0.505263158,
+            0.536842105,
+            0.568421053,
+            0.6
+          ],
+          "function": [
+            -8.28396217e-14,
+            -8.28396217e-14,
+            7.21386569e-05,
+            0.00019917097199999997,
+            0.00043525811899999996,
+            0.0008848248600000001,
+            0.00175082122,
+            0.0034318451299999997,
+            0.00671998434,
+            0.013211115300000001,
+            0.0261743434,
+            0.052435805200000005,
+            0.106527935,
+            0.21978969499999998,
+            0.459174175,
+            0.958954004,
+            1.94612565,
+            3.6908931099999998,
+            6.35643936,
+            9.911563110000001,
+            14.2066
+          ]
+        },
+        "Parameters": "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 300K\n  V bias: 0.6 V (20 points)\n"
+      },
+      "metric_value": 14.2066,
+      "input_mismatches": [],
+      "artifacts": [
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Output Log",
+          "kind": "file",
+          "bytes": 217434,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Output Log",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Output Log"
+        },
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Padre Input Deck",
+          "kind": "file",
+          "bytes": 30040,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Padre Input Deck",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951/Padre Input Deck"
+        }
+      ],
+      "raw_path": "raw/run-01-st4pnjunction.json",
+      "inline_attachments_stripped": true,
+      "served_from_cache": true,
+      "original_date": "2023-10-27T16:21:53Z",
+      "provenance_evidence": {
+        "source": "squid present in original study",
+        "original_run_index": 0,
+        "original_study": "si-pn-diode-vs-temperature"
+      }
+    },
+    {
+      "index": 2,
+      "tool": "st4pnjunction",
+      "chosen_inputs": {
+        "temperature": 350
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "requested_at": "2026-10-21T17:13:28Z",
+      "completed_at": "2026-10-21T17:13:40Z",
+      "wall_seconds": 12.0,
+      "status": "done",
+      "error": null,
+      "squid": "st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561",
+      "revision": 15,
+      "resolved_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "effective_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 350,
+          "reported": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "simulator_log_date": "2026-10-21T17:02:21Z",
+      "outputs": {
+        "IV Characteristic": {
+          "voltage": [
+            0,
+            0,
+            0.0315789474,
+            0.0631578947,
+            0.0947368421,
+            0.126315789,
+            0.157894737,
+            0.189473684,
+            0.221052632,
+            0.252631579,
+            0.284210526,
+            0.315789474,
+            0.347368421,
+            0.378947368,
+            0.410526316,
+            0.442105263,
+            0.473684211,
+            0.505263158,
+            0.536842105,
+            0.568421053,
+            0.6
+          ],
+          "function": [
+            -6.26934146e-14,
+            -6.2693416e-14,
+            0.00281197974,
+            0.00747282661,
+            0.0155826072,
+            0.0300887237,
+            0.05648080999999999,
+            0.105093831,
+            0.195453916,
+            0.363959238,
+            0.675302271,
+            1.23253793,
+            2.16883103,
+            3.6038661399999996,
+            5.58885379,
+            8.09465908,
+            11.0463132,
+            14.3609757,
+            17.9669941,
+            21.808278299999998,
+            25.842582500000002
+          ]
+        },
+        "Parameters": "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 350K\n  V bias: 0.6 V (20 points)\n"
+      },
+      "metric_value": 25.842582500000002,
+      "input_mismatches": [
+        {
+          "name": "temperature",
+          "chosen": 350,
+          "resolved": 300
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Output Log",
+          "kind": "file",
+          "bytes": 205357,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Output Log",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Output Log"
+        },
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Padre Input Deck",
+          "kind": "file",
+          "bytes": 30040,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Padre Input Deck",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561/Padre Input Deck"
+        }
+      ],
+      "raw_path": "raw/run-02-st4pnjunction.json",
+      "inline_attachments_stripped": true,
+      "served_from_cache": true,
+      "original_date": "2026-10-21T17:02:38Z",
+      "provenance_evidence": {
+        "source": "squid present in original study",
+        "original_run_index": 2,
+        "original_study": "si-pn-diode-vs-temperature"
+      }
+    },
+    {
+      "index": 3,
+      "tool": "st4pnjunction",
+      "chosen_inputs": {
+        "temperature": 400
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "requested_at": "2026-10-21T17:13:44Z",
+      "completed_at": "2026-10-21T17:13:57Z",
+      "wall_seconds": 13.0,
+      "status": "done",
+      "error": null,
+      "squid": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+      "revision": 15,
+      "resolved_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "effective_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 400,
+          "reported": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "simulator_log_date": "2026-10-21T17:02:22Z",
+      "outputs": {
+        "IV Characteristic": {
+          "voltage": [
+            0,
+            0,
+            0.0315789474,
+            0.0631578947,
+            0.0947368421,
+            0.126315789,
+            0.157894737,
+            0.189473684,
+            0.221052632,
+            0.252631579,
+            0.284210526,
+            0.315789474,
+            0.347368421,
+            0.378947368,
+            0.410526316,
+            0.442105263,
+            0.473684211,
+            0.505263158,
+            0.536842105,
+            0.568421053,
+            0.6
+          ],
+          "function": [
+            0,
+            0,
+            0.0515318962,
+            0.134144551,
+            0.270918118,
+            0.49907584599999993,
+            0.873749832,
+            1.4654776299999999,
+            2.3454180499999997,
+            3.5618070399999997,
+            5.1245137199999995,
+            7.00932097,
+            9.174179749999999,
+            11.5738777,
+            14.167858500000001,
+            16.922673099999997,
+            19.811775,
+            22.8144091,
+            25.914389999999997,
+            29.0990456,
+            32.358382
+          ]
+        },
+        "Parameters": "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 400K\n  V bias: 0.6 V (20 points)\n"
+      },
+      "metric_value": 32.358382,
+      "input_mismatches": [
+        {
+          "name": "temperature",
+          "chosen": 400,
+          "resolved": 300
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log",
+          "kind": "file",
+          "bytes": 208025,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log"
+        },
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck",
+          "kind": "file",
+          "bytes": 30040,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck"
+        }
+      ],
+      "raw_path": "raw/run-03-st4pnjunction.json",
+      "inline_attachments_stripped": true,
+      "served_from_cache": true,
+      "original_date": "2026-10-21T17:02:40Z",
+      "provenance_evidence": {
+        "source": "squid present in original study",
+        "original_run_index": 3,
+        "original_study": "si-pn-diode-vs-temperature"
+      }
+    },
+    {
+      "index": 4,
+      "tool": "st4pnjunction",
+      "chosen_inputs": {
+        "temperature": 450
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "requested_at": "2026-10-21T17:14:47Z",
+      "completed_at": "2026-10-21T17:14:59Z",
+      "wall_seconds": 12.0,
+      "status": "done",
+      "error": null,
+      "squid": "st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c",
+      "revision": 15,
+      "resolved_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "effective_inputs": {
+        "p_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy",
+          "max": 1000,
+          "min": 0,
+          "value": 60,
+          "units": null
+        },
+        "n_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.",
+          "max": 1000,
+          "min": 0,
+          "value": 120,
+          "units": null
+        },
+        "i_node": {
+          "type": "Integer",
+          "description": "Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.",
+          "max": 1000,
+          "min": 0,
+          "value": 0,
+          "units": null
+        },
+        "p_len": {
+          "type": "Number",
+          "description": "Physical length of P-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 3
+        },
+        "n_len": {
+          "type": "Number",
+          "description": "Physical length of N-type material.",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 6
+        },
+        "i_len": {
+          "type": "Number",
+          "description": "Physical length of the intrinsic region (zero doping).",
+          "units": "micrometer",
+          "max": 100.0,
+          "min": 0.0,
+          "value": 0
+        },
+        "temperature": {
+          "type": "Number",
+          "description": "This is the temperature in the environment around the device.",
+          "units": "kelvin",
+          "max": 500.0,
+          "min": 77.0,
+          "value": 450,
+          "reported": 300
+        },
+        "materialp": {
+          "type": "Choice",
+          "description": "Set the type of material used for the entire region.",
+          "options": [
+            "GaAs",
+            "Ge",
+            "Si",
+            "InP"
+          ],
+          "value": "Si",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "vsweep_high": {
+          "type": "Number",
+          "description": "Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.",
+          "units": "volt",
+          "max": 5.0,
+          "min": -5.0,
+          "value": 0.6
+        },
+        "vn_step": {
+          "type": "Integer",
+          "description": "Set the number data points sampled in the voltage sweep.",
+          "min": 2,
+          "value": 20,
+          "units": null,
+          "max": null
+        },
+        "taun": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "taup": {
+          "type": "Number",
+          "description": "This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.",
+          "units": "second",
+          "min": 0.0,
+          "value": 1e-10,
+          "max": null
+        },
+        "impurity": {
+          "type": "Boolean",
+          "description": "Here you define if any impurity doping level exists in the intrinsic region.",
+          "value": false,
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritydoping": {
+          "type": "Choice",
+          "description": "Here you define type of doping for in the intrinsic region",
+          "options": [
+            "Ntype",
+            "Ptype"
+          ],
+          "value": "Ptype",
+          "units": null,
+          "min": null,
+          "max": null
+        },
+        "impuritylevel": {
+          "type": "Number",
+          "description": "Unintentional doping in the intrinsic region.",
+          "units": "1 / centimeter ** 3",
+          "max": 1e+26,
+          "min": 0.0,
+          "value": 10000000000000.0
+        },
+        "Na": {
+          "type": "Number",
+          "description": "Acceptor concentration (Na-)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 2000000000000000.0
+        },
+        "Nd": {
+          "type": "Number",
+          "description": "Donor concentration (Nd+)",
+          "units": "1 / centimeter ** 3",
+          "max": 2e+22,
+          "min": 1.0,
+          "value": 1000000000000000.0
+        }
+      },
+      "simulator_log_date": "2026-10-21T17:11:23Z",
+      "outputs": {
+        "IV Characteristic": {
+          "voltage": [
+            0,
+            0,
+            0.0315789474,
+            0.0631578947,
+            0.0947368421,
+            0.126315789,
+            0.157894737,
+            0.189473684,
+            0.221052632,
+            0.252631579,
+            0.284210526,
+            0.315789474,
+            0.347368421,
+            0.378947368,
+            0.410526316,
+            0.442105263,
+            0.473684211,
+            0.505263158,
+            0.536842105,
+            0.568421053,
+            0.6
+          ],
+          "function": [
+            -1.958741e-17,
+            -1.958741e-17,
+            0.498317072,
+            1.17302457,
+            2.0569056999999997,
+            3.16469464,
+            4.49181822,
+            6.019956960000001,
+            7.72451396,
+            9.58025758,
+            11.5643092,
+            13.6571944,
+            15.8428608,
+            18.1082728,
+            20.4428973,
+            22.8382179,
+            25.2873223,
+            27.7845686,
+            30.3253213,
+            32.9057453,
+            35.5226445
+          ]
+        },
+        "Parameters": "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 450K\n  V bias: 0.6 V (20 points)\n"
+      },
+      "metric_value": 35.5226445,
+      "input_mismatches": [
+        {
+          "name": "temperature",
+          "chosen": 450,
+          "resolved": 300
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Output Log",
+          "kind": "file",
+          "bytes": 207909,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Output Log",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Output Log"
+        },
+        {
+          "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Padre Input Deck",
+          "kind": "file",
+          "bytes": 30040,
+          "uri": "aura://artifact/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Padre Input Deck",
+          "mimeType": "application/octet-stream",
+          "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c/Padre Input Deck"
+        }
+      ],
+      "raw_path": "raw/run-04-st4pnjunction.json",
+      "inline_attachments_stripped": true,
+      "served_from_cache": true,
+      "original_date": "2026-10-21T17:11:36Z",
+      "provenance_evidence": {
+        "source": "squid present in original study",
+        "original_run_index": 4,
+        "original_study": "si-pn-diode-vs-temperature"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "index": 0,
+      "tool": "st4pnjunction",
+      "purpose": "rerun pre-run check temperature=250 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 250
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:13:01Z",
+      "csv_path": "raw/query-00-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/62adb25f3ebcaf1a104f80ba12afbb207cc8d42e",
+          "revision": "15",
+          "date": "2026-02-04 19:53:38.232739"
+        },
+        {
+          "squid": "st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb",
+          "revision": "15",
+          "date": "2026-10-21 10:02:33.43434"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "tool": "st4pnjunction",
+      "purpose": "rerun pre-run check temperature=350 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 350
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:13:01Z",
+      "csv_path": "raw/query-01-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/1c8d655d61b8f3fbe1b798a3928aea3f092752a1",
+          "revision": "15",
+          "date": "2023-10-27 10:22:09.568058"
+        },
+        {
+          "squid": "st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561",
+          "revision": "15",
+          "date": "2026-10-21 10:02:38.369293"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "tool": "st4pnjunction",
+      "purpose": "rerun pre-run check temperature=400 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 400
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:13:01Z",
+      "csv_path": "raw/query-02-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 3,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/1d333a7faf3b4e4fc9e5d36889e2e18b6d1e3453",
+          "revision": "15",
+          "date": "2023-10-27 10:01:42.958897"
+        },
+        {
+          "squid": "st4pnjunction/r15/e8e15c2db801af1229321ee2290641d1fc7bae0c",
+          "revision": "15",
+          "date": "2026-06-04 04:41:19.132219"
+        },
+        {
+          "squid": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+          "revision": "15",
+          "date": "2026-10-21 10:02:40.438749"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "tool": "st4pnjunction",
+      "purpose": "rerun pre-run check temperature=450 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 450
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:13:01Z",
+      "csv_path": "raw/query-03-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 1,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c",
+          "revision": "15",
+          "date": "2026-10-21 10:11:36.199616"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "tool": "st4pnjunction",
+      "purpose": "rerun pre-run check temperature=300 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 300
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:13:14Z",
+      "csv_path": "raw/query-04-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 50,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r9/06f2c9568baabb579d81267bfb6992db08f2c3ec",
+          "revision": "9",
+          "date": "2021-10-18 16:26:55.933364"
+        },
+        {
+          "squid": "st4pnjunction/r12/c8db5a46fa2904e2057b393fb59b1593b0508587",
+          "revision": "12",
+          "date": "2022-04-12 08:04:24.833773"
+        },
+        {
+          "squid": "st4pnjunction/r12/e2ac5a240583bd23b3991bc63e33d119d05ba39c",
+          "revision": "12",
+          "date": "2022-04-13 13:45:05.206262"
+        },
+        {
+          "squid": "st4pnjunction/r12/672a64f1262e6bce599bcbf68fd444c75b61f799",
+          "revision": "12",
+          "date": "2022-04-14 07:19:01.006879"
+        },
+        {
+          "squid": "st4pnjunction/r12/80cfa341dd01fff550c4671097cd6428c93b4a69",
+          "revision": "12",
+          "date": "2022-04-27 13:40:17.526644"
+        },
+        {
+          "squid": "st4pnjunction/r12/293fddb7dbb3ceecb3e635781730aecbc404f457",
+          "revision": "12",
+          "date": "2022-04-30 23:14:51.962251"
+        },
+        {
+          "squid": "st4pnjunction/r12/cab1a804f9d5108de75e9133717acd500ce12567",
+          "revision": "12",
+          "date": "2022-04-30 23:14:52.026929"
+        },
+        {
+          "squid": "st4pnjunction/r12/29c8340428580026fcde87d3bae75f228f99d7ff",
+          "revision": "12",
+          "date": "2022-05-01 08:38:29.660518"
+        },
+        {
+          "squid": "st4pnjunction/r12/bbd5cccc21ab4400302ea7952ca833291da3d5be",
+          "revision": "12",
+          "date": "2022-05-01 09:00:37.158219"
+        },
+        {
+          "squid": "st4pnjunction/r12/eec9565c44255043847f73654b3364169b35d30d",
+          "revision": "12",
+          "date": "2022-09-30 16:37:14.728251"
+        },
+        {
+          "squid": "st4pnjunction/r12/016ab3ba8d89b4439067debce70ae0aef9fb192e",
+          "revision": "12",
+          "date": "2022-10-24 12:55:02.426668"
+        },
+        {
+          "squid": "st4pnjunction/r12/509213d6c3580ab50f8b4a8c940dd49b4a18d9b7",
+          "revision": "12",
+          "date": "2023-01-19 12:54:30.993881"
+        },
+        {
+          "squid": "st4pnjunction/r9/86f6c4e5b4d691f48dabc1ac6cdaae01c938b13a",
+          "revision": "9",
+          "date": "2023-01-19 13:00:37.450134"
+        },
+        {
+          "squid": "st4pnjunction/r12/d8481bbe2c1ea3976f33913db1ba68f27ba045c8",
+          "revision": "12",
+          "date": "2023-01-19 13:21:39.852139"
+        },
+        {
+          "squid": "st4pnjunction/r12/f7d5f881a11a08530ca6edec92cee8a2fe536bfe",
+          "revision": "12",
+          "date": "2023-01-19 13:26:03.053813"
+        },
+        {
+          "squid": "st4pnjunction/r12/e0e3a409641f8917037d4d8f6325c79693bdcc99",
+          "revision": "12",
+          "date": "2023-01-19 14:52:58.676105"
+        },
+        {
+          "squid": "st4pnjunction/r12/1bbf03aef2bc26c531e516df4479ec59ee6bd299",
+          "revision": "12",
+          "date": "2023-01-24 09:27:20.893729"
+        },
+        {
+          "squid": "st4pnjunction/r12/3d74ca1e42e9c95dd1a134210d606aaf5fdd3608",
+          "revision": "12",
+          "date": "2023-02-15 13:37:20.906164"
+        },
+        {
+          "squid": "st4pnjunction/r12/0d85072b3d947dfddbbeba944c3390dc6ed33bcd",
+          "revision": "12",
+          "date": "2023-10-17 14:21:35.290738"
+        },
+        {
+          "squid": "st4pnjunction/r12/33623b7c28cce1ae3df6742de0815b65473f9568",
+          "revision": "12",
+          "date": "2023-10-25 15:08:15.257806"
+        },
+        {
+          "squid": "st4pnjunction/r12/2ec12b7b9b43f8ecd34ea79897bfca1d605eae0f",
+          "revision": "12",
+          "date": "2023-10-26 09:19:40.322174"
+        },
+        {
+          "squid": "st4pnjunction/r15/4f10fb3dfdd0cca5897cc3a3531a9dfffa01046b",
+          "revision": "15",
+          "date": "2023-10-27 08:42:24.076665"
+        },
+        {
+          "squid": "st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951",
+          "revision": "15",
+          "date": "2023-10-27 09:21:53.201148"
+        },
+        {
+          "squid": "st4pnjunction/r15/f534bd9818c3f9ea763fabd42a87d79cb4765715",
+          "revision": "15",
+          "date": "2023-10-27 09:40:15.530475"
+        },
+        {
+          "squid": "st4pnjunction/r15/f833a0f86b62c71b2ded8461927ee2f9eabc8847",
+          "revision": "15",
+          "date": "2023-10-27 09:41:05.750161"
+        },
+        {
+          "squid": "st4pnjunction/r15/f40dd77c08600c8d30fbedbff77f5124e9edb855",
+          "revision": "15",
+          "date": "2023-10-27 09:45:47.036948"
+        },
+        {
+          "squid": "st4pnjunction/r15/9d9c8e2ff96d423cbcd82a2430efb1bd210e70e0",
+          "revision": "15",
+          "date": "2023-10-27 09:50:09.194307"
+        },
+        {
+          "squid": "st4pnjunction/r15/bc60f6e55643f7ccad77fb82a2299c62b9f0368c",
+          "revision": "15",
+          "date": "2023-10-27 09:53:06.614484"
+        },
+        {
+          "squid": "st4pnjunction/r15/53b84e4b00a9c139355a9bb71c4fc5eec9f91736",
+          "revision": "15",
+          "date": "2023-10-27 10:13:36.966878"
+        },
+        {
+          "squid": "st4pnjunction/r15/b73fafeb089f216625fc7cfd1671d233d06c2b75",
+          "revision": "15",
+          "date": "2023-10-27 10:16:14.200832"
+        },
+        {
+          "squid": "st4pnjunction/r15/6c8cd3718fbe73b6b1b21a92c3cea78fc9a97e93",
+          "revision": "15",
+          "date": "2023-10-27 11:14:14.777967"
+        },
+        {
+          "squid": "st4pnjunction/r15/f05510690f5b2798938f50d88eea2f026772dbea",
+          "revision": "15",
+          "date": "2023-10-30 11:04:07.548377"
+        },
+        {
+          "squid": "st4pnjunction/r15/fa539eaf28e2baf4f3d2a33a37705cd191b989f1",
+          "revision": "15",
+          "date": "2023-11-01 06:50:31.675499"
+        },
+        {
+          "squid": "st4pnjunction/r15/e4939f2d67e8e89b499cac626549586edc8dc655",
+          "revision": "15",
+          "date": "2023-11-01 06:55:19.692077"
+        },
+        {
+          "squid": "st4pnjunction/r15/1bdd1eebc2e4c7747f339c796bcb3ce5d204fe8b",
+          "revision": "15",
+          "date": "2023-11-01 07:21:42.471161"
+        },
+        {
+          "squid": "st4pnjunction/r15/a16c1f9d63abf54f55382ac4a78a6d431f26a475",
+          "revision": "15",
+          "date": "2023-11-01 09:24:33.956886"
+        },
+        {
+          "squid": "st4pnjunction/r15/78b2ebe6344113605711385d15d68f3574bdf8f7",
+          "revision": "15",
+          "date": "2023-11-01 09:28:12.349621"
+        },
+        {
+          "squid": "st4pnjunction/r15/33f7a2ca9e1b49bf1b1e36effb22b17b419161ae",
+          "revision": "15",
+          "date": "2023-11-01 10:41:05.309612"
+        },
+        {
+          "squid": "st4pnjunction/r15/40e2f24002c22f094dac4a8001dca6a9c920fe90",
+          "revision": "15",
+          "date": "2023-11-02 08:10:10.862991"
+        },
+        {
+          "squid": "st4pnjunction/r15/5ab11970e9a9d08dbf44804ab5908ce9e080ab14",
+          "revision": "15",
+          "date": "2023-12-25 10:06:29.241836"
+        },
+        {
+          "squid": "st4pnjunction/r15/3a212b1ef9169037162b7ba2854d8418a859bf5e",
+          "revision": "15",
+          "date": "2023-12-25 10:11:00.256003"
+        },
+        {
+          "squid": "st4pnjunction/r15/8f7e4466f4befe4be983966b3debe3747e1e4f3d",
+          "revision": "15",
+          "date": "2024-02-13 09:26:48.913012"
+        },
+        {
+          "squid": "st4pnjunction/r15/5e8d3cde05d3a8d302d9619f3c24faa7d41e8da8",
+          "revision": "15",
+          "date": "2024-02-28 19:16:42.30435"
+        },
+        {
+          "squid": "st4pnjunction/r15/2761f2a886616ec770a94436b6cd75d583795f61",
+          "revision": "15",
+          "date": "2024-03-24 14:33:48.04702"
+        },
+        {
+          "squid": "st4pnjunction/r15/d368f434c8341aa4b1e53520d6f1d2b2c476a45b",
+          "revision": "15",
+          "date": "2024-12-17 01:10:00.599246"
+        },
+        {
+          "squid": "st4pnjunction/r15/8f8c3d43d9bcbd558c68bea2f630a05ebb08318e",
+          "revision": "15",
+          "date": "2024-12-28 11:44:08.947379"
+        },
+        {
+          "squid": "st4pnjunction/r15/d339c910c6a939e50b324c0784dd1cdc1d12f408",
+          "revision": "15",
+          "date": "2025-03-24 20:03:16.379638"
+        },
+        {
+          "squid": "st4pnjunction/r15/b5593fa4e517cba4c9e487b507e193776d449cfd",
+          "revision": "15",
+          "date": "2025-04-08 00:20:44.309568"
+        },
+        {
+          "squid": "st4pnjunction/r15/db1934f1b8fbbfeba293f664c2d616200a7ebac7",
+          "revision": "15",
+          "date": "2025-04-23 22:02:44.091319"
+        },
+        {
+          "squid": "st4pnjunction/r15/5e3a9d5b4e2f23d3b75bf06105d41d5b8ee92b4b",
+          "revision": "15",
+          "date": "2025-04-23 22:07:25.957446"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "tool": "st4pnjunction",
+      "purpose": "rerun post-run check temperature=250 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 250
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:15:16Z",
+      "csv_path": "raw/query-05-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/62adb25f3ebcaf1a104f80ba12afbb207cc8d42e",
+          "revision": "15",
+          "date": "2026-02-04 19:53:38.232739"
+        },
+        {
+          "squid": "st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb",
+          "revision": "15",
+          "date": "2026-10-21 10:02:33.43434"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "tool": "st4pnjunction",
+      "purpose": "rerun post-run check temperature=350 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 350
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:15:16Z",
+      "csv_path": "raw/query-06-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/1c8d655d61b8f3fbe1b798a3928aea3f092752a1",
+          "revision": "15",
+          "date": "2023-10-27 10:22:09.568058"
+        },
+        {
+          "squid": "st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561",
+          "revision": "15",
+          "date": "2026-10-21 10:02:38.369293"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "tool": "st4pnjunction",
+      "purpose": "rerun post-run check temperature=400 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 400
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:15:17Z",
+      "csv_path": "raw/query-07-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 3,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/1d333a7faf3b4e4fc9e5d36889e2e18b6d1e3453",
+          "revision": "15",
+          "date": "2023-10-27 10:01:42.958897"
+        },
+        {
+          "squid": "st4pnjunction/r15/e8e15c2db801af1229321ee2290641d1fc7bae0c",
+          "revision": "15",
+          "date": "2026-06-04 04:41:19.132219"
+        },
+        {
+          "squid": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+          "revision": "15",
+          "date": "2026-10-21 10:02:40.438749"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "tool": "st4pnjunction",
+      "purpose": "rerun post-run check temperature=300 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 300
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:15:30Z",
+      "csv_path": "raw/query-08-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 50,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r9/06f2c9568baabb579d81267bfb6992db08f2c3ec",
+          "revision": "9",
+          "date": "2021-10-18 16:26:55.933364"
+        },
+        {
+          "squid": "st4pnjunction/r12/c8db5a46fa2904e2057b393fb59b1593b0508587",
+          "revision": "12",
+          "date": "2022-04-12 08:04:24.833773"
+        },
+        {
+          "squid": "st4pnjunction/r12/e2ac5a240583bd23b3991bc63e33d119d05ba39c",
+          "revision": "12",
+          "date": "2022-04-13 13:45:05.206262"
+        },
+        {
+          "squid": "st4pnjunction/r12/672a64f1262e6bce599bcbf68fd444c75b61f799",
+          "revision": "12",
+          "date": "2022-04-14 07:19:01.006879"
+        },
+        {
+          "squid": "st4pnjunction/r12/80cfa341dd01fff550c4671097cd6428c93b4a69",
+          "revision": "12",
+          "date": "2022-04-27 13:40:17.526644"
+        },
+        {
+          "squid": "st4pnjunction/r12/293fddb7dbb3ceecb3e635781730aecbc404f457",
+          "revision": "12",
+          "date": "2022-04-30 23:14:51.962251"
+        },
+        {
+          "squid": "st4pnjunction/r12/cab1a804f9d5108de75e9133717acd500ce12567",
+          "revision": "12",
+          "date": "2022-04-30 23:14:52.026929"
+        },
+        {
+          "squid": "st4pnjunction/r12/29c8340428580026fcde87d3bae75f228f99d7ff",
+          "revision": "12",
+          "date": "2022-05-01 08:38:29.660518"
+        },
+        {
+          "squid": "st4pnjunction/r12/bbd5cccc21ab4400302ea7952ca833291da3d5be",
+          "revision": "12",
+          "date": "2022-05-01 09:00:37.158219"
+        },
+        {
+          "squid": "st4pnjunction/r12/eec9565c44255043847f73654b3364169b35d30d",
+          "revision": "12",
+          "date": "2022-09-30 16:37:14.728251"
+        },
+        {
+          "squid": "st4pnjunction/r12/016ab3ba8d89b4439067debce70ae0aef9fb192e",
+          "revision": "12",
+          "date": "2022-10-24 12:55:02.426668"
+        },
+        {
+          "squid": "st4pnjunction/r12/509213d6c3580ab50f8b4a8c940dd49b4a18d9b7",
+          "revision": "12",
+          "date": "2023-01-19 12:54:30.993881"
+        },
+        {
+          "squid": "st4pnjunction/r9/86f6c4e5b4d691f48dabc1ac6cdaae01c938b13a",
+          "revision": "9",
+          "date": "2023-01-19 13:00:37.450134"
+        },
+        {
+          "squid": "st4pnjunction/r12/d8481bbe2c1ea3976f33913db1ba68f27ba045c8",
+          "revision": "12",
+          "date": "2023-01-19 13:21:39.852139"
+        },
+        {
+          "squid": "st4pnjunction/r12/f7d5f881a11a08530ca6edec92cee8a2fe536bfe",
+          "revision": "12",
+          "date": "2023-01-19 13:26:03.053813"
+        },
+        {
+          "squid": "st4pnjunction/r12/e0e3a409641f8917037d4d8f6325c79693bdcc99",
+          "revision": "12",
+          "date": "2023-01-19 14:52:58.676105"
+        },
+        {
+          "squid": "st4pnjunction/r12/1bbf03aef2bc26c531e516df4479ec59ee6bd299",
+          "revision": "12",
+          "date": "2023-01-24 09:27:20.893729"
+        },
+        {
+          "squid": "st4pnjunction/r12/3d74ca1e42e9c95dd1a134210d606aaf5fdd3608",
+          "revision": "12",
+          "date": "2023-02-15 13:37:20.906164"
+        },
+        {
+          "squid": "st4pnjunction/r12/0d85072b3d947dfddbbeba944c3390dc6ed33bcd",
+          "revision": "12",
+          "date": "2023-10-17 14:21:35.290738"
+        },
+        {
+          "squid": "st4pnjunction/r12/33623b7c28cce1ae3df6742de0815b65473f9568",
+          "revision": "12",
+          "date": "2023-10-25 15:08:15.257806"
+        },
+        {
+          "squid": "st4pnjunction/r12/2ec12b7b9b43f8ecd34ea79897bfca1d605eae0f",
+          "revision": "12",
+          "date": "2023-10-26 09:19:40.322174"
+        },
+        {
+          "squid": "st4pnjunction/r15/4f10fb3dfdd0cca5897cc3a3531a9dfffa01046b",
+          "revision": "15",
+          "date": "2023-10-27 08:42:24.076665"
+        },
+        {
+          "squid": "st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951",
+          "revision": "15",
+          "date": "2023-10-27 09:21:53.201148"
+        },
+        {
+          "squid": "st4pnjunction/r15/f534bd9818c3f9ea763fabd42a87d79cb4765715",
+          "revision": "15",
+          "date": "2023-10-27 09:40:15.530475"
+        },
+        {
+          "squid": "st4pnjunction/r15/f833a0f86b62c71b2ded8461927ee2f9eabc8847",
+          "revision": "15",
+          "date": "2023-10-27 09:41:05.750161"
+        },
+        {
+          "squid": "st4pnjunction/r15/f40dd77c08600c8d30fbedbff77f5124e9edb855",
+          "revision": "15",
+          "date": "2023-10-27 09:45:47.036948"
+        },
+        {
+          "squid": "st4pnjunction/r15/9d9c8e2ff96d423cbcd82a2430efb1bd210e70e0",
+          "revision": "15",
+          "date": "2023-10-27 09:50:09.194307"
+        },
+        {
+          "squid": "st4pnjunction/r15/bc60f6e55643f7ccad77fb82a2299c62b9f0368c",
+          "revision": "15",
+          "date": "2023-10-27 09:53:06.614484"
+        },
+        {
+          "squid": "st4pnjunction/r15/53b84e4b00a9c139355a9bb71c4fc5eec9f91736",
+          "revision": "15",
+          "date": "2023-10-27 10:13:36.966878"
+        },
+        {
+          "squid": "st4pnjunction/r15/b73fafeb089f216625fc7cfd1671d233d06c2b75",
+          "revision": "15",
+          "date": "2023-10-27 10:16:14.200832"
+        },
+        {
+          "squid": "st4pnjunction/r15/6c8cd3718fbe73b6b1b21a92c3cea78fc9a97e93",
+          "revision": "15",
+          "date": "2023-10-27 11:14:14.777967"
+        },
+        {
+          "squid": "st4pnjunction/r15/f05510690f5b2798938f50d88eea2f026772dbea",
+          "revision": "15",
+          "date": "2023-10-30 11:04:07.548377"
+        },
+        {
+          "squid": "st4pnjunction/r15/fa539eaf28e2baf4f3d2a33a37705cd191b989f1",
+          "revision": "15",
+          "date": "2023-11-01 06:50:31.675499"
+        },
+        {
+          "squid": "st4pnjunction/r15/e4939f2d67e8e89b499cac626549586edc8dc655",
+          "revision": "15",
+          "date": "2023-11-01 06:55:19.692077"
+        },
+        {
+          "squid": "st4pnjunction/r15/1bdd1eebc2e4c7747f339c796bcb3ce5d204fe8b",
+          "revision": "15",
+          "date": "2023-11-01 07:21:42.471161"
+        },
+        {
+          "squid": "st4pnjunction/r15/a16c1f9d63abf54f55382ac4a78a6d431f26a475",
+          "revision": "15",
+          "date": "2023-11-01 09:24:33.956886"
+        },
+        {
+          "squid": "st4pnjunction/r15/78b2ebe6344113605711385d15d68f3574bdf8f7",
+          "revision": "15",
+          "date": "2023-11-01 09:28:12.349621"
+        },
+        {
+          "squid": "st4pnjunction/r15/33f7a2ca9e1b49bf1b1e36effb22b17b419161ae",
+          "revision": "15",
+          "date": "2023-11-01 10:41:05.309612"
+        },
+        {
+          "squid": "st4pnjunction/r15/40e2f24002c22f094dac4a8001dca6a9c920fe90",
+          "revision": "15",
+          "date": "2023-11-02 08:10:10.862991"
+        },
+        {
+          "squid": "st4pnjunction/r15/5ab11970e9a9d08dbf44804ab5908ce9e080ab14",
+          "revision": "15",
+          "date": "2023-12-25 10:06:29.241836"
+        },
+        {
+          "squid": "st4pnjunction/r15/3a212b1ef9169037162b7ba2854d8418a859bf5e",
+          "revision": "15",
+          "date": "2023-12-25 10:11:00.256003"
+        },
+        {
+          "squid": "st4pnjunction/r15/8f7e4466f4befe4be983966b3debe3747e1e4f3d",
+          "revision": "15",
+          "date": "2024-02-13 09:26:48.913012"
+        },
+        {
+          "squid": "st4pnjunction/r15/5e8d3cde05d3a8d302d9619f3c24faa7d41e8da8",
+          "revision": "15",
+          "date": "2024-02-28 19:16:42.30435"
+        },
+        {
+          "squid": "st4pnjunction/r15/2761f2a886616ec770a94436b6cd75d583795f61",
+          "revision": "15",
+          "date": "2024-03-24 14:33:48.04702"
+        },
+        {
+          "squid": "st4pnjunction/r15/d368f434c8341aa4b1e53520d6f1d2b2c476a45b",
+          "revision": "15",
+          "date": "2024-12-17 01:10:00.599246"
+        },
+        {
+          "squid": "st4pnjunction/r15/8f8c3d43d9bcbd558c68bea2f630a05ebb08318e",
+          "revision": "15",
+          "date": "2024-12-28 11:44:08.947379"
+        },
+        {
+          "squid": "st4pnjunction/r15/d339c910c6a939e50b324c0784dd1cdc1d12f408",
+          "revision": "15",
+          "date": "2025-03-24 20:03:16.379638"
+        },
+        {
+          "squid": "st4pnjunction/r15/b5593fa4e517cba4c9e487b507e193776d449cfd",
+          "revision": "15",
+          "date": "2025-04-08 00:20:44.309568"
+        },
+        {
+          "squid": "st4pnjunction/r15/db1934f1b8fbbfeba293f664c2d616200a7ebac7",
+          "revision": "15",
+          "date": "2025-04-23 22:02:44.091319"
+        },
+        {
+          "squid": "st4pnjunction/r15/5e3a9d5b4e2f23d3b75bf06105d41d5b8ee92b4b",
+          "revision": "15",
+          "date": "2025-04-23 22:07:25.957446"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "tool": "st4pnjunction",
+      "purpose": "rerun post-run check temperature=450 K",
+      "filters": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature",
+          "Na",
+          "Nd",
+          "vsweep_high",
+          "materialp"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 450
+          },
+          {
+            "field": "Na",
+            "operation": "==",
+            "value": 2000000000000000.0
+          },
+          {
+            "field": "Nd",
+            "operation": "==",
+            "value": 1000000000000000.0
+          },
+          {
+            "field": "vsweep_high",
+            "operation": "==",
+            "value": 0.6
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "logged_at": "2026-10-21T17:15:43Z",
+      "csv_path": "raw/query-09-st4pnjunction.csv",
+      "columns": [
+        "squid",
+        "revision",
+        "date",
+        "input.temperature",
+        "input.Na",
+        "input.Nd",
+        "input.vsweep_high",
+        "input.materialp"
+      ],
+      "row_count": 1,
+      "rows": [
+        {
+          "squid": "st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c",
+          "revision": "15",
+          "date": "2026-10-21 10:11:36.199616"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "computed_at": "2026-10-21T17:22:52Z",
+    "rerun_of": "si-pn-diode-vs-temperature",
+    "cache_window_hours": 1.0,
+    "resultsdb_utc_offset_hours": -7.0,
+    "offset_source": "calibrated against simulator log stamps",
+    "offset_samples": 10,
+    "cached": 5,
+    "fresh": 0,
+    "unverified": 0,
+    "to_verify": []
+  },
+  "rerun_of": "si-pn-diode-vs-temperature"
+}

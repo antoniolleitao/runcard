@@ -1,0 +1,23 @@
+Verbatim excerpts from the get_job_result payload of job 788e8f2e-1fdf-4ae4-ab7b-33403bd50f71 (st4pnjunction, chosen_inputs {'temperature': 250}).
+Source: Claude Code session transcript file mcp-claude_ai_nanoHUB-get_job_result-1792602329781.txt (the full payload, 255,868 characters, including inline_files).
+The copy under studies/si-pn-diode-vs-temperature/raw/run-01-st4pnjunction.json has inline_files removed, so the two inline excerpts below are NOT in the study's raw folder.
+
+== inline_files['Padre Input Deck'].content: lines containing 'temperature' or 'temp' ==
+deck line 40: models srh conmob fldmob impact temperature=250
+
+== inline_files['Output Log'].content: first 12 lines ==
+
+
+     ********* PADRE2.4E Device Modeling Program *********
+
+              Date and time = 10/21/26  17:02:19  
+
+
+
+   1... title      pn diode (setup)
+   2... options    PO
+
+
+
+== inline_files['Output Log'].content: lines containing 'temperature' ==
+log line 48:   25... models srh conmob fldmob impact temperature=250

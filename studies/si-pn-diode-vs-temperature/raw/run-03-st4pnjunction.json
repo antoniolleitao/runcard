@@ -1,0 +1,100 @@
+{
+  "status": "done",
+  "job_id": "63ca4d26-00b8-4bf3-a0e6-780cdb7d19d9",
+  "result": {
+    "success": true,
+    "simulation_summary": [
+      {
+        "voltage": [
+          0,
+          0,
+          0.0315789474,
+          0.0631578947,
+          0.0947368421,
+          0.126315789,
+          0.157894737,
+          0.189473684,
+          0.221052632,
+          0.252631579,
+          0.284210526,
+          0.315789474,
+          0.347368421,
+          0.378947368,
+          0.410526316,
+          0.442105263,
+          0.473684211,
+          0.505263158,
+          0.536842105,
+          0.568421053,
+          0.6
+        ],
+        "function": [
+          0,
+          0,
+          0.0515318962,
+          0.134144551,
+          0.270918118,
+          0.49907584599999993,
+          0.873749832,
+          1.4654776299999999,
+          2.3454180499999997,
+          3.5618070399999997,
+          5.1245137199999995,
+          7.00932097,
+          9.174179749999999,
+          11.5738777,
+          14.167858500000001,
+          16.922673099999997,
+          19.811775,
+          22.8144091,
+          25.914389999999997,
+          29.0990456,
+          32.358382
+        ]
+      },
+      "== STRUCTURE ==\n  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3\n  I-region:  0um (0 nodes)\n  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3\n\n== MATERIALS ==\n  Material: silicon\n  taun = 1e-10s\n  taup = 1e-10s\n\n== ENVIRONMENT ==\n  Temperature: 400K\n  V bias: 0.6 V (20 points)\n"
+    ],
+    "simulation_inputs": "p_node:\n    type: Integer\n    description: Number of plotted points along the length of the P-type material. Increase number of nodes at high doping for better accuracy\n    max: 1000\n    min: 0\n    value: 60\n\nn_node:\n    type: Integer\n    description: Number of plotted points along the length of the N-type material. Increase number of nodes at high doping for better accuracy.\n    max: 1000\n    min: 0\n    value: 120\n\ni_node:\n    type: Integer\n    description: Number of plotted points along the length of the intrinsic (zero doping) region. Only valid when intrinsic region length is not zero.\n    max: 1000\n    min: 0\n    value: 0\n\np_len:\n    type: Number\n    description: Physical length of P-type material.\n    units: micrometer\n    max: 100.0\n    min: 0.0\n    value: 3\n\nn_len:\n    type: Number\n    description: Physical length of N-type material.\n    units: micrometer\n    max: 100.0\n    min: 0.0\n    value: 6\n\ni_len:\n    type: Number\n    description: Physical length of the intrinsic region (zero doping).\n    units: micrometer\n    max: 100.0\n    min: 0.0\n    value: 0\n\ntemperature:\n    type: Number\n    description: This is the temperature in the environment around the device.\n    units: kelvin\n    max: 500.0\n    min: 77.0\n    value: 300\n\nmaterialp:\n    type: Choice\n    description: Set the type of material used for the entire region.\n    options: ['GaAs', 'Ge', 'Si', 'InP']\n    value: Si\n\nvsweep_high:\n    type: Number\n    description: Set an applied voltage across the PIN Junction.  For IV characteristics, the voltage will sweep from 0V (ground) to the applied voltage.\n    units: volt\n    max: 5.0\n    min: -5.0\n    value: 0.6\n\nvn_step:\n    type: Integer\n    description: Set the number data points sampled in the voltage sweep.\n    min: 2\n    value: 20\n\ntaun:\n    type: Number\n    description: This is the minority carrier lifetime for electrons.  It represents the average time that an electron will diffuse in p-type material before recombining with a hole.\n    units: second\n    min: 0.0\n    value: 1e-10\n\ntaup:\n    type: Number\n    description: This is the minority carrier lifetime for holes.  It represents the average time that a hole will diffuse in n-type material before recombining with an electron.\n    units: second\n    min: 0.0\n    value: 1e-10\n\nimpurity:\n    type: Boolean\n    description: Here you define if any impurity doping level exists in the intrinsic region.\n    value: False\n\nimpuritydoping:\n    type: Choice\n    description: Here you define type of doping for in the intrinsic region\n    options: ['Ntype', 'Ptype']\n    value: Ptype\n\nimpuritylevel:\n    type: Number\n    description: Unintentional doping in the intrinsic region.\n    units: 1 / centimeter ** 3\n    max: 1e+26\n    min: 0.0\n    value: 10000000000000.0\n\nNa:\n    type: Number\n    description: Acceptor concentration (Na-)\n    units: 1 / centimeter ** 3\n    max: 2e+22\n    min: 1.0\n    value: 2000000000000000.0\n\nNd:\n    type: Number\n    description: Donor concentration (Nd+)\n    units: 1 / centimeter ** 3\n    max: 2e+22\n    min: 1.0\n    value: 1000000000000000.0\n",
+    "simulation_squidID": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+    "has_files": true,
+    "directory": "./temporary/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+    "contents": [
+      "Output Log",
+      "Padre Input Deck"
+    ],
+    "artifacts": [
+      {
+        "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log",
+        "kind": "file",
+        "bytes": 208025,
+        "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log",
+        "mimeType": "application/octet-stream",
+        "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log"
+      },
+      {
+        "path": "/home/nanohub/<redacted>/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck",
+        "kind": "file",
+        "bytes": 30040,
+        "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck",
+        "mimeType": "application/octet-stream",
+        "webdav_url": "https://nanohub.org/webdav/home/.AURA/artifacts/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck"
+      }
+    ],
+    "resource_links": [
+      {
+        "type": "resource_link",
+        "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Output Log",
+        "name": "Output Log",
+        "mimeType": "application/octet-stream",
+        "size": 208025
+      },
+      {
+        "type": "resource_link",
+        "uri": "aura://artifact/shared/st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee/Padre Input Deck",
+        "name": "Padre Input Deck",
+        "mimeType": "application/octet-stream",
+        "size": 30040
+      }
+    ]
+  }
+}

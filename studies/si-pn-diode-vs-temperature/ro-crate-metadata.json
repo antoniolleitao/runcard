@@ -1,0 +1,1451 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.1"
+        },
+        {
+          "@id": "https://w3id.org/ro/wfrun/process/0.1"
+        }
+      ],
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "#aura-trace-b7298f71-7271-4977-b0c4-e1cd4504260b",
+      "@type": "CreativeWork",
+      "name": "AURA workflow history trace",
+      "identifier": "b7298f71-7271-4977-b0c4-e1cd4504260b"
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "How does the forward current density of a Si p-n junction at 0.6 V change with temperature?",
+      "description": "Across 5 runs, current density at max bias goes from 1.75 A/cm^2 at temperature=250 K to 35.52 A/cm^2 at temperature=450 K. That is a factor of 20.3 over the range. 1 result came from nanoHUB's cache and 4 were computed in this session.",
+      "datePublished": "2026-10-21T17:00:44Z",
+      "dateCreated": "2026-10-21T17:00:44Z",
+      "author": {
+        "@id": "#author"
+      },
+      "license": {
+        "@id": "https://spdx.org/licenses/MIT"
+      },
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/wfrun/process/0.1"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "card.html"
+        },
+        {
+          "@id": "card.md"
+        },
+        {
+          "@id": "rerun.json"
+        },
+        {
+          "@id": "methods.txt"
+        },
+        {
+          "@id": "chart.svg"
+        },
+        {
+          "@id": "study.json"
+        },
+        {
+          "@id": "raw/"
+        },
+        {
+          "@id": "compare.md"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "#run-0"
+        },
+        {
+          "@id": "#run-1"
+        },
+        {
+          "@id": "#run-2"
+        },
+        {
+          "@id": "#run-3"
+        },
+        {
+          "@id": "#run-4"
+        }
+      ],
+      "keywords": [
+        "nanoHUB",
+        "AURA",
+        "simulation",
+        "provenance",
+        "runcard"
+      ],
+      "identifier": "si-pn-diode-vs-temperature",
+      "isBasedOn": {
+        "@id": "#aura-trace-b7298f71-7271-4977-b0c4-e1cd4504260b"
+      }
+    },
+    {
+      "@id": "#author",
+      "@type": "Person",
+      "name": "Antonio Leitao"
+    },
+    {
+      "@id": "#agent-client",
+      "@type": "SoftwareApplication",
+      "name": "Claude Code",
+      "softwareVersion": "claude-fable-5-1",
+      "description": "LLM agent client that drove the simulation session through the AURA MCP server"
+    },
+    {
+      "@id": "#runcard",
+      "@type": "SoftwareApplication",
+      "name": "runcard",
+      "softwareVersion": "0.1.0",
+      "url": "https://github.com/leitao-dev/runcard"
+    },
+    {
+      "@id": "#tool-st4pnjunction",
+      "@type": "SoftwareApplication",
+      "name": "st4pnjunction",
+      "url": "https://nanohub.org/tools/st4pnjunction",
+      "version": "r15",
+      "description": "nanoHUB sim2l tool executed via AURA MCP run_sim2l",
+      "identifier": "https://doi.org/10.21981/JMXM-4E74"
+    },
+    {
+      "@id": "#run-0-in-p_node",
+      "@type": "PropertyValue",
+      "name": "p_node",
+      "value": 60,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-0-in-n_node",
+      "@type": "PropertyValue",
+      "name": "n_node",
+      "value": 120,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-0-in-i_node",
+      "@type": "PropertyValue",
+      "name": "i_node",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-0-in-p_len",
+      "@type": "PropertyValue",
+      "name": "p_len",
+      "value": 3,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-0-in-n_len",
+      "@type": "PropertyValue",
+      "name": "n_len",
+      "value": 6,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-0-in-i_len",
+      "@type": "PropertyValue",
+      "name": "i_len",
+      "value": 0,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-0-in-temperature",
+      "@type": "PropertyValue",
+      "name": "temperature",
+      "value": 300,
+      "unitText": "K",
+      "minValue": 77.0,
+      "maxValue": 500.0
+    },
+    {
+      "@id": "#run-0-in-materialp",
+      "@type": "PropertyValue",
+      "name": "materialp",
+      "value": "Si"
+    },
+    {
+      "@id": "#run-0-in-vsweep_high",
+      "@type": "PropertyValue",
+      "name": "vsweep_high",
+      "value": 0.6,
+      "unitText": "V",
+      "minValue": -5.0,
+      "maxValue": 5.0
+    },
+    {
+      "@id": "#run-0-in-vn_step",
+      "@type": "PropertyValue",
+      "name": "vn_step",
+      "value": 20,
+      "minValue": 2
+    },
+    {
+      "@id": "#run-0-in-taun",
+      "@type": "PropertyValue",
+      "name": "taun",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-0-in-taup",
+      "@type": "PropertyValue",
+      "name": "taup",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-0-in-impurity",
+      "@type": "PropertyValue",
+      "name": "impurity",
+      "value": false
+    },
+    {
+      "@id": "#run-0-in-impuritydoping",
+      "@type": "PropertyValue",
+      "name": "impuritydoping",
+      "value": "Ptype"
+    },
+    {
+      "@id": "#run-0-in-impuritylevel",
+      "@type": "PropertyValue",
+      "name": "impuritylevel",
+      "value": 10000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 0.0,
+      "maxValue": 1e+26
+    },
+    {
+      "@id": "#run-0-in-Na",
+      "@type": "PropertyValue",
+      "name": "Na",
+      "value": 2000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-0-in-Nd",
+      "@type": "PropertyValue",
+      "name": "Nd",
+      "value": 1000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-0-metric",
+      "@type": "PropertyValue",
+      "name": "current density at max bias",
+      "value": 14.2066,
+      "unitText": "A/cm^2",
+      "description": "the last value of the 'function' array of output 'IV Characteristic'"
+    },
+    {
+      "@id": "#run-0",
+      "@type": "CreateAction",
+      "name": "run 0: st4pnjunction temperature=300 (default)",
+      "identifier": "st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951",
+      "instrument": {
+        "@id": "#tool-st4pnjunction"
+      },
+      "agent": [
+        {
+          "@id": "#author"
+        },
+        {
+          "@id": "#agent-client"
+        }
+      ],
+      "object": [
+        {
+          "@id": "#run-0-in-p_node"
+        },
+        {
+          "@id": "#run-0-in-n_node"
+        },
+        {
+          "@id": "#run-0-in-i_node"
+        },
+        {
+          "@id": "#run-0-in-p_len"
+        },
+        {
+          "@id": "#run-0-in-n_len"
+        },
+        {
+          "@id": "#run-0-in-i_len"
+        },
+        {
+          "@id": "#run-0-in-temperature"
+        },
+        {
+          "@id": "#run-0-in-materialp"
+        },
+        {
+          "@id": "#run-0-in-vsweep_high"
+        },
+        {
+          "@id": "#run-0-in-vn_step"
+        },
+        {
+          "@id": "#run-0-in-taun"
+        },
+        {
+          "@id": "#run-0-in-taup"
+        },
+        {
+          "@id": "#run-0-in-impurity"
+        },
+        {
+          "@id": "#run-0-in-impuritydoping"
+        },
+        {
+          "@id": "#run-0-in-impuritylevel"
+        },
+        {
+          "@id": "#run-0-in-Na"
+        },
+        {
+          "@id": "#run-0-in-Nd"
+        }
+      ],
+      "result": [
+        {
+          "@id": "#run-0-metric"
+        },
+        {
+          "@id": "raw/run-00-st4pnjunction.json"
+        }
+      ],
+      "startTime": "2026-10-21T17:02:15Z",
+      "endTime": "2026-10-21T17:02:19Z",
+      "actionStatus": "http://schema.org/CompletedActionStatus",
+      "description": "Result served from nanoHUB ResultsDB cache (originally computed 2023-10-27T16:21:53Z)"
+    },
+    {
+      "@id": "raw/run-00-st4pnjunction.json",
+      "@type": "File",
+      "name": "raw get_job_result payload for run 0",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "#run-1-in-p_node",
+      "@type": "PropertyValue",
+      "name": "p_node",
+      "value": 60,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-1-in-n_node",
+      "@type": "PropertyValue",
+      "name": "n_node",
+      "value": 120,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-1-in-i_node",
+      "@type": "PropertyValue",
+      "name": "i_node",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-1-in-p_len",
+      "@type": "PropertyValue",
+      "name": "p_len",
+      "value": 3,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-1-in-n_len",
+      "@type": "PropertyValue",
+      "name": "n_len",
+      "value": 6,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-1-in-i_len",
+      "@type": "PropertyValue",
+      "name": "i_len",
+      "value": 0,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-1-in-temperature",
+      "@type": "PropertyValue",
+      "name": "temperature",
+      "value": 250,
+      "unitText": "K",
+      "minValue": 77.0,
+      "maxValue": 500.0,
+      "description": "chosen by the client (differs from tool default); the server's simulation_inputs reported 300"
+    },
+    {
+      "@id": "#run-1-in-materialp",
+      "@type": "PropertyValue",
+      "name": "materialp",
+      "value": "Si"
+    },
+    {
+      "@id": "#run-1-in-vsweep_high",
+      "@type": "PropertyValue",
+      "name": "vsweep_high",
+      "value": 0.6,
+      "unitText": "V",
+      "minValue": -5.0,
+      "maxValue": 5.0
+    },
+    {
+      "@id": "#run-1-in-vn_step",
+      "@type": "PropertyValue",
+      "name": "vn_step",
+      "value": 20,
+      "minValue": 2
+    },
+    {
+      "@id": "#run-1-in-taun",
+      "@type": "PropertyValue",
+      "name": "taun",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-1-in-taup",
+      "@type": "PropertyValue",
+      "name": "taup",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-1-in-impurity",
+      "@type": "PropertyValue",
+      "name": "impurity",
+      "value": false
+    },
+    {
+      "@id": "#run-1-in-impuritydoping",
+      "@type": "PropertyValue",
+      "name": "impuritydoping",
+      "value": "Ptype"
+    },
+    {
+      "@id": "#run-1-in-impuritylevel",
+      "@type": "PropertyValue",
+      "name": "impuritylevel",
+      "value": 10000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 0.0,
+      "maxValue": 1e+26
+    },
+    {
+      "@id": "#run-1-in-Na",
+      "@type": "PropertyValue",
+      "name": "Na",
+      "value": 2000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-1-in-Nd",
+      "@type": "PropertyValue",
+      "name": "Nd",
+      "value": 1000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-1-metric",
+      "@type": "PropertyValue",
+      "name": "current density at max bias",
+      "value": 1.74986196,
+      "unitText": "A/cm^2",
+      "description": "the last value of the 'function' array of output 'IV Characteristic'"
+    },
+    {
+      "@id": "#run-1",
+      "@type": "CreateAction",
+      "name": "run 1: st4pnjunction temperature=250",
+      "identifier": "st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb",
+      "instrument": {
+        "@id": "#tool-st4pnjunction"
+      },
+      "agent": [
+        {
+          "@id": "#author"
+        },
+        {
+          "@id": "#agent-client"
+        }
+      ],
+      "object": [
+        {
+          "@id": "#run-1-in-p_node"
+        },
+        {
+          "@id": "#run-1-in-n_node"
+        },
+        {
+          "@id": "#run-1-in-i_node"
+        },
+        {
+          "@id": "#run-1-in-p_len"
+        },
+        {
+          "@id": "#run-1-in-n_len"
+        },
+        {
+          "@id": "#run-1-in-i_len"
+        },
+        {
+          "@id": "#run-1-in-temperature"
+        },
+        {
+          "@id": "#run-1-in-materialp"
+        },
+        {
+          "@id": "#run-1-in-vsweep_high"
+        },
+        {
+          "@id": "#run-1-in-vn_step"
+        },
+        {
+          "@id": "#run-1-in-taun"
+        },
+        {
+          "@id": "#run-1-in-taup"
+        },
+        {
+          "@id": "#run-1-in-impurity"
+        },
+        {
+          "@id": "#run-1-in-impuritydoping"
+        },
+        {
+          "@id": "#run-1-in-impuritylevel"
+        },
+        {
+          "@id": "#run-1-in-Na"
+        },
+        {
+          "@id": "#run-1-in-Nd"
+        }
+      ],
+      "result": [
+        {
+          "@id": "#run-1-metric"
+        },
+        {
+          "@id": "raw/run-01-st4pnjunction.json"
+        }
+      ],
+      "startTime": "2026-10-21T17:04:44Z",
+      "endTime": "2026-10-21T17:04:58Z",
+      "actionStatus": "http://schema.org/CompletedActionStatus",
+      "description": "Result computed during this session"
+    },
+    {
+      "@id": "raw/run-01-st4pnjunction.json",
+      "@type": "File",
+      "name": "raw get_job_result payload for run 1",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "#run-2-in-p_node",
+      "@type": "PropertyValue",
+      "name": "p_node",
+      "value": 60,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-2-in-n_node",
+      "@type": "PropertyValue",
+      "name": "n_node",
+      "value": 120,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-2-in-i_node",
+      "@type": "PropertyValue",
+      "name": "i_node",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-2-in-p_len",
+      "@type": "PropertyValue",
+      "name": "p_len",
+      "value": 3,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-2-in-n_len",
+      "@type": "PropertyValue",
+      "name": "n_len",
+      "value": 6,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-2-in-i_len",
+      "@type": "PropertyValue",
+      "name": "i_len",
+      "value": 0,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-2-in-temperature",
+      "@type": "PropertyValue",
+      "name": "temperature",
+      "value": 350,
+      "unitText": "K",
+      "minValue": 77.0,
+      "maxValue": 500.0,
+      "description": "chosen by the client (differs from tool default); the server's simulation_inputs reported 300"
+    },
+    {
+      "@id": "#run-2-in-materialp",
+      "@type": "PropertyValue",
+      "name": "materialp",
+      "value": "Si"
+    },
+    {
+      "@id": "#run-2-in-vsweep_high",
+      "@type": "PropertyValue",
+      "name": "vsweep_high",
+      "value": 0.6,
+      "unitText": "V",
+      "minValue": -5.0,
+      "maxValue": 5.0
+    },
+    {
+      "@id": "#run-2-in-vn_step",
+      "@type": "PropertyValue",
+      "name": "vn_step",
+      "value": 20,
+      "minValue": 2
+    },
+    {
+      "@id": "#run-2-in-taun",
+      "@type": "PropertyValue",
+      "name": "taun",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-2-in-taup",
+      "@type": "PropertyValue",
+      "name": "taup",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-2-in-impurity",
+      "@type": "PropertyValue",
+      "name": "impurity",
+      "value": false
+    },
+    {
+      "@id": "#run-2-in-impuritydoping",
+      "@type": "PropertyValue",
+      "name": "impuritydoping",
+      "value": "Ptype"
+    },
+    {
+      "@id": "#run-2-in-impuritylevel",
+      "@type": "PropertyValue",
+      "name": "impuritylevel",
+      "value": 10000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 0.0,
+      "maxValue": 1e+26
+    },
+    {
+      "@id": "#run-2-in-Na",
+      "@type": "PropertyValue",
+      "name": "Na",
+      "value": 2000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-2-in-Nd",
+      "@type": "PropertyValue",
+      "name": "Nd",
+      "value": 1000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-2-metric",
+      "@type": "PropertyValue",
+      "name": "current density at max bias",
+      "value": 25.842582500000002,
+      "unitText": "A/cm^2",
+      "description": "the last value of the 'function' array of output 'IV Characteristic'"
+    },
+    {
+      "@id": "#run-2",
+      "@type": "CreateAction",
+      "name": "run 2: st4pnjunction temperature=350",
+      "identifier": "st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561",
+      "instrument": {
+        "@id": "#tool-st4pnjunction"
+      },
+      "agent": [
+        {
+          "@id": "#author"
+        },
+        {
+          "@id": "#agent-client"
+        }
+      ],
+      "object": [
+        {
+          "@id": "#run-2-in-p_node"
+        },
+        {
+          "@id": "#run-2-in-n_node"
+        },
+        {
+          "@id": "#run-2-in-i_node"
+        },
+        {
+          "@id": "#run-2-in-p_len"
+        },
+        {
+          "@id": "#run-2-in-n_len"
+        },
+        {
+          "@id": "#run-2-in-i_len"
+        },
+        {
+          "@id": "#run-2-in-temperature"
+        },
+        {
+          "@id": "#run-2-in-materialp"
+        },
+        {
+          "@id": "#run-2-in-vsweep_high"
+        },
+        {
+          "@id": "#run-2-in-vn_step"
+        },
+        {
+          "@id": "#run-2-in-taun"
+        },
+        {
+          "@id": "#run-2-in-taup"
+        },
+        {
+          "@id": "#run-2-in-impurity"
+        },
+        {
+          "@id": "#run-2-in-impuritydoping"
+        },
+        {
+          "@id": "#run-2-in-impuritylevel"
+        },
+        {
+          "@id": "#run-2-in-Na"
+        },
+        {
+          "@id": "#run-2-in-Nd"
+        }
+      ],
+      "result": [
+        {
+          "@id": "#run-2-metric"
+        },
+        {
+          "@id": "raw/run-02-st4pnjunction.json"
+        }
+      ],
+      "startTime": "2026-10-21T17:05:38Z",
+      "endTime": "2026-10-21T17:05:51Z",
+      "actionStatus": "http://schema.org/CompletedActionStatus",
+      "description": "Result computed during this session"
+    },
+    {
+      "@id": "raw/run-02-st4pnjunction.json",
+      "@type": "File",
+      "name": "raw get_job_result payload for run 2",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "#run-3-in-p_node",
+      "@type": "PropertyValue",
+      "name": "p_node",
+      "value": 60,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-3-in-n_node",
+      "@type": "PropertyValue",
+      "name": "n_node",
+      "value": 120,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-3-in-i_node",
+      "@type": "PropertyValue",
+      "name": "i_node",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-3-in-p_len",
+      "@type": "PropertyValue",
+      "name": "p_len",
+      "value": 3,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-3-in-n_len",
+      "@type": "PropertyValue",
+      "name": "n_len",
+      "value": 6,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-3-in-i_len",
+      "@type": "PropertyValue",
+      "name": "i_len",
+      "value": 0,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-3-in-temperature",
+      "@type": "PropertyValue",
+      "name": "temperature",
+      "value": 400,
+      "unitText": "K",
+      "minValue": 77.0,
+      "maxValue": 500.0,
+      "description": "chosen by the client (differs from tool default); the server's simulation_inputs reported 300"
+    },
+    {
+      "@id": "#run-3-in-materialp",
+      "@type": "PropertyValue",
+      "name": "materialp",
+      "value": "Si"
+    },
+    {
+      "@id": "#run-3-in-vsweep_high",
+      "@type": "PropertyValue",
+      "name": "vsweep_high",
+      "value": 0.6,
+      "unitText": "V",
+      "minValue": -5.0,
+      "maxValue": 5.0
+    },
+    {
+      "@id": "#run-3-in-vn_step",
+      "@type": "PropertyValue",
+      "name": "vn_step",
+      "value": 20,
+      "minValue": 2
+    },
+    {
+      "@id": "#run-3-in-taun",
+      "@type": "PropertyValue",
+      "name": "taun",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-3-in-taup",
+      "@type": "PropertyValue",
+      "name": "taup",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-3-in-impurity",
+      "@type": "PropertyValue",
+      "name": "impurity",
+      "value": false
+    },
+    {
+      "@id": "#run-3-in-impuritydoping",
+      "@type": "PropertyValue",
+      "name": "impuritydoping",
+      "value": "Ptype"
+    },
+    {
+      "@id": "#run-3-in-impuritylevel",
+      "@type": "PropertyValue",
+      "name": "impuritylevel",
+      "value": 10000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 0.0,
+      "maxValue": 1e+26
+    },
+    {
+      "@id": "#run-3-in-Na",
+      "@type": "PropertyValue",
+      "name": "Na",
+      "value": 2000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-3-in-Nd",
+      "@type": "PropertyValue",
+      "name": "Nd",
+      "value": 1000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-3-metric",
+      "@type": "PropertyValue",
+      "name": "current density at max bias",
+      "value": 32.358382,
+      "unitText": "A/cm^2",
+      "description": "the last value of the 'function' array of output 'IV Characteristic'"
+    },
+    {
+      "@id": "#run-3",
+      "@type": "CreateAction",
+      "name": "run 3: st4pnjunction temperature=400",
+      "identifier": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+      "instrument": {
+        "@id": "#tool-st4pnjunction"
+      },
+      "agent": [
+        {
+          "@id": "#author"
+        },
+        {
+          "@id": "#agent-client"
+        }
+      ],
+      "object": [
+        {
+          "@id": "#run-3-in-p_node"
+        },
+        {
+          "@id": "#run-3-in-n_node"
+        },
+        {
+          "@id": "#run-3-in-i_node"
+        },
+        {
+          "@id": "#run-3-in-p_len"
+        },
+        {
+          "@id": "#run-3-in-n_len"
+        },
+        {
+          "@id": "#run-3-in-i_len"
+        },
+        {
+          "@id": "#run-3-in-temperature"
+        },
+        {
+          "@id": "#run-3-in-materialp"
+        },
+        {
+          "@id": "#run-3-in-vsweep_high"
+        },
+        {
+          "@id": "#run-3-in-vn_step"
+        },
+        {
+          "@id": "#run-3-in-taun"
+        },
+        {
+          "@id": "#run-3-in-taup"
+        },
+        {
+          "@id": "#run-3-in-impurity"
+        },
+        {
+          "@id": "#run-3-in-impuritydoping"
+        },
+        {
+          "@id": "#run-3-in-impuritylevel"
+        },
+        {
+          "@id": "#run-3-in-Na"
+        },
+        {
+          "@id": "#run-3-in-Nd"
+        }
+      ],
+      "result": [
+        {
+          "@id": "#run-3-metric"
+        },
+        {
+          "@id": "raw/run-03-st4pnjunction.json"
+        }
+      ],
+      "startTime": "2026-10-21T17:08:28Z",
+      "endTime": "2026-10-21T17:08:41Z",
+      "actionStatus": "http://schema.org/CompletedActionStatus",
+      "description": "Result computed during this session"
+    },
+    {
+      "@id": "raw/run-03-st4pnjunction.json",
+      "@type": "File",
+      "name": "raw get_job_result payload for run 3",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "#run-4-in-p_node",
+      "@type": "PropertyValue",
+      "name": "p_node",
+      "value": 60,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-4-in-n_node",
+      "@type": "PropertyValue",
+      "name": "n_node",
+      "value": 120,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-4-in-i_node",
+      "@type": "PropertyValue",
+      "name": "i_node",
+      "value": 0,
+      "minValue": 0,
+      "maxValue": 1000
+    },
+    {
+      "@id": "#run-4-in-p_len",
+      "@type": "PropertyValue",
+      "name": "p_len",
+      "value": 3,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-4-in-n_len",
+      "@type": "PropertyValue",
+      "name": "n_len",
+      "value": 6,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-4-in-i_len",
+      "@type": "PropertyValue",
+      "name": "i_len",
+      "value": 0,
+      "unitText": "um",
+      "minValue": 0.0,
+      "maxValue": 100.0
+    },
+    {
+      "@id": "#run-4-in-temperature",
+      "@type": "PropertyValue",
+      "name": "temperature",
+      "value": 450,
+      "unitText": "K",
+      "minValue": 77.0,
+      "maxValue": 500.0,
+      "description": "chosen by the client (differs from tool default); the server's simulation_inputs reported 300"
+    },
+    {
+      "@id": "#run-4-in-materialp",
+      "@type": "PropertyValue",
+      "name": "materialp",
+      "value": "Si"
+    },
+    {
+      "@id": "#run-4-in-vsweep_high",
+      "@type": "PropertyValue",
+      "name": "vsweep_high",
+      "value": 0.6,
+      "unitText": "V",
+      "minValue": -5.0,
+      "maxValue": 5.0
+    },
+    {
+      "@id": "#run-4-in-vn_step",
+      "@type": "PropertyValue",
+      "name": "vn_step",
+      "value": 20,
+      "minValue": 2
+    },
+    {
+      "@id": "#run-4-in-taun",
+      "@type": "PropertyValue",
+      "name": "taun",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-4-in-taup",
+      "@type": "PropertyValue",
+      "name": "taup",
+      "value": 1e-10,
+      "unitText": "s",
+      "minValue": 0.0
+    },
+    {
+      "@id": "#run-4-in-impurity",
+      "@type": "PropertyValue",
+      "name": "impurity",
+      "value": false
+    },
+    {
+      "@id": "#run-4-in-impuritydoping",
+      "@type": "PropertyValue",
+      "name": "impuritydoping",
+      "value": "Ptype"
+    },
+    {
+      "@id": "#run-4-in-impuritylevel",
+      "@type": "PropertyValue",
+      "name": "impuritylevel",
+      "value": 10000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 0.0,
+      "maxValue": 1e+26
+    },
+    {
+      "@id": "#run-4-in-Na",
+      "@type": "PropertyValue",
+      "name": "Na",
+      "value": 2000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-4-in-Nd",
+      "@type": "PropertyValue",
+      "name": "Nd",
+      "value": 1000000000000000.0,
+      "unitText": "cm^-3",
+      "minValue": 1.0,
+      "maxValue": 2e+22
+    },
+    {
+      "@id": "#run-4-metric",
+      "@type": "PropertyValue",
+      "name": "current density at max bias",
+      "value": 35.5226445,
+      "unitText": "A/cm^2",
+      "description": "the last value of the 'function' array of output 'IV Characteristic'"
+    },
+    {
+      "@id": "#run-4",
+      "@type": "CreateAction",
+      "name": "run 4: st4pnjunction temperature=450",
+      "identifier": "st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c",
+      "instrument": {
+        "@id": "#tool-st4pnjunction"
+      },
+      "agent": [
+        {
+          "@id": "#author"
+        },
+        {
+          "@id": "#agent-client"
+        }
+      ],
+      "object": [
+        {
+          "@id": "#run-4-in-p_node"
+        },
+        {
+          "@id": "#run-4-in-n_node"
+        },
+        {
+          "@id": "#run-4-in-i_node"
+        },
+        {
+          "@id": "#run-4-in-p_len"
+        },
+        {
+          "@id": "#run-4-in-n_len"
+        },
+        {
+          "@id": "#run-4-in-i_len"
+        },
+        {
+          "@id": "#run-4-in-temperature"
+        },
+        {
+          "@id": "#run-4-in-materialp"
+        },
+        {
+          "@id": "#run-4-in-vsweep_high"
+        },
+        {
+          "@id": "#run-4-in-vn_step"
+        },
+        {
+          "@id": "#run-4-in-taun"
+        },
+        {
+          "@id": "#run-4-in-taup"
+        },
+        {
+          "@id": "#run-4-in-impurity"
+        },
+        {
+          "@id": "#run-4-in-impuritydoping"
+        },
+        {
+          "@id": "#run-4-in-impuritylevel"
+        },
+        {
+          "@id": "#run-4-in-Na"
+        },
+        {
+          "@id": "#run-4-in-Nd"
+        }
+      ],
+      "result": [
+        {
+          "@id": "#run-4-metric"
+        },
+        {
+          "@id": "raw/run-04-st4pnjunction.json"
+        }
+      ],
+      "startTime": "2026-10-21T17:11:10Z",
+      "endTime": "2026-10-21T17:11:48Z",
+      "actionStatus": "http://schema.org/CompletedActionStatus",
+      "description": "Result computed during this session"
+    },
+    {
+      "@id": "raw/run-04-st4pnjunction.json",
+      "@type": "File",
+      "name": "raw get_job_result payload for run 4",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "card.html",
+      "@type": "File",
+      "name": "Study card (HTML)",
+      "encodingFormat": "text/html"
+    },
+    {
+      "@id": "card.md",
+      "@type": "File",
+      "name": "Study card (Markdown)",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "rerun.json",
+      "@type": "File",
+      "name": "Ordered re-execution plan",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "methods.txt",
+      "@type": "File",
+      "name": "Methods paragraph",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "chart.svg",
+      "@type": "File",
+      "name": "Metric chart",
+      "encodingFormat": "image/svg+xml"
+    },
+    {
+      "@id": "study.json",
+      "@type": "File",
+      "name": "Full study record",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "raw/",
+      "@type": "Dataset",
+      "name": "Raw AURA payloads",
+      "description": "get_job_result and get_data_from_nanohub payloads with inline_files removed and long strings truncated",
+      "hasPart": [
+        {
+          "@id": "raw/run-00-st4pnjunction.json"
+        },
+        {
+          "@id": "raw/run-01-st4pnjunction.json"
+        },
+        {
+          "@id": "raw/run-02-st4pnjunction.json"
+        },
+        {
+          "@id": "raw/run-03-st4pnjunction.json"
+        },
+        {
+          "@id": "raw/run-04-st4pnjunction.json"
+        },
+        {
+          "@id": "raw/query-00-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-01-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-02-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-03-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-04-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-05-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-06-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-07-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-08-st4pnjunction.csv"
+        },
+        {
+          "@id": "raw/query-09-st4pnjunction.csv"
+        }
+      ]
+    },
+    {
+      "@id": "raw/query-00-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 0: pre-run check temperature=250 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-01-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 1: pre-run check temperature=300 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-02-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 2: pre-run check temperature=350 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-03-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 3: pre-run check temperature=400 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-04-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 4: pre-run check temperature=450 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-05-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 5: post-run check temperature=250 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-06-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 6: post-run check temperature=300 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-07-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 7: post-run check temperature=350 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-08-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 8: post-run check temperature=400 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "raw/query-09-st4pnjunction.csv",
+      "@type": "File",
+      "name": "ResultsDB query 9: post-run check temperature=450 K",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "compare.md",
+      "@type": "File",
+      "name": "Comparison against a rerun",
+      "encodingFormat": "text/markdown"
+    }
+  ]
+}

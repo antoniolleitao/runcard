@@ -1,0 +1,7 @@
+temperature:
+    type: Number
+    description: This is the temperature in the environment around the device.
+    units: kelvin
+    max: 500.0
+    min: 77.0
+    value: 300

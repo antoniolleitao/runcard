@@ -1,0 +1,258 @@
+{
+  "study": {
+    "question": "How does the forward current density of a Si p-n junction at 0.6 V change with temperature?",
+    "dir": "studies/si-pn-diode-vs-temperature-rerun",
+    "created_at": "2026-10-21T17:11:43Z",
+    "metric": {
+      "output": "IV Characteristic",
+      "reduce": "last_of_function",
+      "unit": "A/cm^2",
+      "label": "current density at max bias"
+    },
+    "aura_trace_id": "b7298f71-7271-4977-b0c4-e1cd4504260b"
+  },
+  "steps": [
+    {
+      "order": 1,
+      "tool": "st4pnjunction",
+      "execution_tool": "run_sim2l",
+      "chosen_inputs": {
+        "temperature": 250
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "expected_squid": "st4pnjunction/r15/65bea3dd37eb0eaf511a194b47ed30c55ede70cb",
+      "expected_revision": 15,
+      "expected_metric": 1.74986196,
+      "expected_status": "done",
+      "pre_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 250
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "post_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 250
+          }
+        ],
+        "outputs_to_filter_by": []
+      }
+    },
+    {
+      "order": 2,
+      "tool": "st4pnjunction",
+      "execution_tool": "run_sim2l",
+      "chosen_inputs": {},
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "expected_squid": "st4pnjunction/r15/92d2225b5b290c6807945331f1d06b6f81ea8951",
+      "expected_revision": 15,
+      "expected_metric": 14.2066,
+      "expected_status": "done",
+      "pre_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [],
+        "outputs_to_filter_by": []
+      },
+      "post_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [],
+        "outputs_to_filter_by": []
+      }
+    },
+    {
+      "order": 3,
+      "tool": "st4pnjunction",
+      "execution_tool": "run_sim2l",
+      "chosen_inputs": {
+        "temperature": 350
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "expected_squid": "st4pnjunction/r15/9188c77c3908793456732a5df17320b9de0fd561",
+      "expected_revision": 15,
+      "expected_metric": 25.842582500000002,
+      "expected_status": "done",
+      "pre_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 350
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "post_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 350
+          }
+        ],
+        "outputs_to_filter_by": []
+      }
+    },
+    {
+      "order": 4,
+      "tool": "st4pnjunction",
+      "execution_tool": "run_sim2l",
+      "chosen_inputs": {
+        "temperature": 400
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "expected_squid": "st4pnjunction/r15/5fc4c128921ada38380634a248e9a38a10785bee",
+      "expected_revision": 15,
+      "expected_metric": 32.358382,
+      "expected_status": "done",
+      "pre_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 400
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "post_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 400
+          }
+        ],
+        "outputs_to_filter_by": []
+      }
+    },
+    {
+      "order": 5,
+      "tool": "st4pnjunction",
+      "execution_tool": "run_sim2l",
+      "chosen_inputs": {
+        "temperature": 450
+      },
+      "chosen_outputs": [
+        "IV Characteristic",
+        "Parameters"
+      ],
+      "expected_squid": "st4pnjunction/r15/f86c3af78a28ec51a2747e6eebb0c27a4dd2306c",
+      "expected_revision": 15,
+      "expected_metric": 35.5226445,
+      "expected_status": "done",
+      "pre_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 450
+          }
+        ],
+        "outputs_to_filter_by": []
+      },
+      "post_run_query": {
+        "nH_tool": "st4pnjunction",
+        "datapoints": 50,
+        "inputs_to_query": [
+          "temperature"
+        ],
+        "outputs_to_query": [],
+        "query_revision": true,
+        "query_squid": true,
+        "inputs_to_filter_by": [
+          {
+            "field": "temperature",
+            "operation": "==",
+            "value": 450
+          }
+        ],
+        "outputs_to_filter_by": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+We asked: How does the forward current density of a Si p-n junction at 0.6 V change with temperature?
+
+Using the nanoHUB tool st4pnjunction (revision r15, https://nanohub.org/tools/st4pnjunction, DOI 10.21981/JMXM-4E74) through the AURA MCP server, we submitted 5 simulation requests varying temperature over {250, 300, 350, 400, 450} K, with all other inputs at their tool defaults. For each run we requested the outputs 'IV Characteristic', 'Parameters'. The reported metric is current density at max bias (A/cm^2), computed as the last value of the 'function' array of the 'IV Characteristic' output.
+
+Of the 5 successful runs, 5 were served from nanoHUB's ResultsDB cache (originally computed on 2023-10-27, 2026-10-21), 0 were computed during this session.
+
+Requests were submitted between 2026-10-21T17:12:32Z and 2026-10-21T17:14:47Z by Claude Code (claude-fable-5-1) on behalf of Antonio Leitao. Each run is identified by its ResultsDB squid; the ordered re-execution plan is in rerun.json (runcard 0.1.0).

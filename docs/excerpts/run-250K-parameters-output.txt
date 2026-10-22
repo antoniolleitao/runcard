@@ -1,0 +1,14 @@
+== STRUCTURE ==
+  P-region:  3 um (60 nodes) at 2000000000000000.0/cm3
+  I-region:  0um (0 nodes)
+  N-region:  6 um (120 nodes) at 1000000000000000.0/cm3
+
+== MATERIALS ==
+  Material: silicon
+  taun = 1e-10s
+  taup = 1e-10s
+
+== ENVIRONMENT ==
+  Temperature: 250K
+  V bias: 0.6 V (20 points)
+
