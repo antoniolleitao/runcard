@@ -8,6 +8,8 @@ and an agent can re-execute and compare (`rerun.json`, `compare.md`). It is a ze
 package plus a Claude Code skill that tells the agent when to query, when to stop and ask, and what
 to log.
 
+![Study card for the demo study: runs table with squids, cache status and original dates, and the metric chart](docs/card.png)
+
 ## Why
 
 An LLM agent that runs simulations on nanoHUB leaves behind a chat transcript. The transcript does
@@ -41,7 +43,7 @@ computation date of a cached result is visible.
 Python 3.10 or newer, nothing else at runtime. Tests need pytest.
 
 ```
-git clone <this repo> runcard && cd runcard
+git clone https://github.com/antoniolleitao/runcard && cd runcard
 python -m pytest -q          # 35 offline tests
 python -m runcard --help
 ```
@@ -72,10 +74,10 @@ The demo study is in `studies/si-pn-diode-vs-temperature` (card: `card.html`), i
 
 ## Observations on AURA MCP v2.0.0
 
-Facts observed on 2026-10-21 with the st4pnjunction Sim2L (r15), ordered by severity. Evidence
+Facts observed on 2026-10-21 with the st4pnjunction Sim2L (r15), ordered by impact. Evidence
 files quote the saved payloads and query CSVs under `studies/si-pn-diode-vs-temperature/raw/`.
 
-1. **Concurrent `run_sim2l` calls return each other's payloads.** Four jobs submitted in one turn
+1. **Concurrent run_sim2l calls returned the same payload for every request.** Four jobs submitted in one turn
    all came back with the 300 K result although three asked for 250, 350 and 400 K; new ResultsDB
    rows for 250, 350 and 400 K appeared during the batch, but the returned envelopes did not
    correspond to the requests.
